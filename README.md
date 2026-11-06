@@ -53,7 +53,7 @@ MAXs 处理游戏美术、技术美术、作品集、升学申请、校招求职
 
 | 校招与社招候选池 | 求职准备时间线 |
 |---|---|
-| ![MAXs 校招与社招候选池示例](examples/diagrams/maxs-recruitment-pools.png) | ![MAXs 求职准备时间线示例](examples/diagrams/maxs-study-timeline.png) |
+| ![MAXs 校招与社招候选池示例](skills/video-edit/examples/diagrams/maxs-recruitment-pools.png) | ![MAXs 求职准备时间线示例](skills/video-edit/examples/diagrams/maxs-study-timeline.png) |
 
 ## 技研Labs
 
@@ -74,9 +74,9 @@ MAXs 处理游戏美术、技术美术、作品集、升学申请、校招求职
 
 | Maya 父级与子级 | 模型制作流程 |
 |---|---|
-| ![技研Labs 父子级变换示例](examples/diagrams/jiyan-parent-child.png) | ![技研Labs 模型制作流程示例](examples/diagrams/jiyan-model-pipeline.png) |
+| ![技研Labs 父子级变换示例](skills/video-edit/examples/diagrams/jiyan-parent-child.png) | ![技研Labs 模型制作流程示例](skills/video-edit/examples/diagrams/jiyan-model-pipeline.png) |
 
-这些是静态风格示例；SVG 原稿位于 [`examples/diagrams/`](examples/diagrams/)，视频中的具体图解仍要根据当条素材重画和定时。
+这些是静态风格示例；SVG 原稿位于 [`skills/video-edit/examples/diagrams/`](skills/video-edit/examples/diagrams/)，视频中的具体图解仍要根据当条素材重画和定时。
 
 ## 测试与依赖
 

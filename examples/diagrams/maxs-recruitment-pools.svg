@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <marker id="arrow" markerWidth="14" markerHeight="12" refX="12" refY="6" orient="auto">
+      <path d="M0,0 L14,6 L0,12 Z" fill="#6A6963"/>
+    </marker>
+    <style>
+      text { font-family: "MiSans VF", "PingFang SC", sans-serif; }
+      .title { font-size: 54px; font-weight: 700; fill: #1C1C1A; }
+      .sub { font-size: 30px; fill: #6A6963; }
+      .lane { font-size: 34px; font-weight: 700; fill: #1C1C1A; }
+      .node { font-size: 32px; font-weight: 600; fill: #1C1C1A; }
+      .small { font-size: 26px; fill: #6A6963; }
+    </style>
+  </defs>
+  <rect width="1080" height="1920" fill="#F5F5F5"/>
+  <text class="title" x="108" y="188">校招与社招</text>
+  <text class="sub" x="108" y="242">两个渠道，面对不同的候选池</text>
+  <line x1="108" y1="290" x2="950" y2="290" stroke="#DEDDD6" stroke-width="3"/>
+
+  <text class="lane" x="108" y="460">校招</text>
+  <rect x="220" y="360" width="210" height="150" rx="8" fill="#FFFFFF" stroke="#DEDDD6" stroke-width="3"/>
+  <text class="node" x="325" y="445" text-anchor="middle">应届生</text>
+  <path d="M430 435 H476" fill="none" stroke="#6A6963" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="488" y="360" width="210" height="150" rx="8" fill="#FFFFFF" stroke="#DEDDD6" stroke-width="3"/>
+  <text class="node" x="593" y="445" text-anchor="middle">同届竞争</text>
+  <path d="M698 435 H744" fill="none" stroke="#6A6963" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="756" y="360" width="194" height="150" rx="8" fill="#134FFF"/>
+  <text x="853" y="420" text-anchor="middle" fill="#FFFFFF" font-size="28" font-weight="700" font-family="MiSans VF, PingFang SC, sans-serif">较易进入</text>
+  <text x="853" y="462" text-anchor="middle" fill="#FFFFFF" font-size="28" font-weight="700" font-family="MiSans VF, PingFang SC, sans-serif">一线大厂</text>
+
+  <line x1="108" y1="600" x2="950" y2="600" stroke="#DEDDD6" stroke-width="3"/>
+  <text class="lane" x="108" y="810">社招</text>
+  <rect x="220" y="700" width="210" height="170" rx="8" fill="#FFFFFF" stroke="#DEDDD6" stroke-width="3"/>
+  <text class="node" x="325" y="765" text-anchor="middle">应届生</text>
+  <text x="325" y="808" text-anchor="middle" fill="#6A6963" font-size="26px" font-weight="600" font-family="MiSans VF, PingFang SC, sans-serif">4–5年经验者</text>
+  <path d="M430 785 H476" fill="none" stroke="#6A6963" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="488" y="700" width="210" height="170" rx="8" fill="#FFFFFF" stroke="#DEDDD6" stroke-width="3"/>
+  <text class="node" x="593" y="795" text-anchor="middle">一起竞争</text>
+  <path d="M698 785 H744" fill="none" stroke="#6A6963" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="756" y="700" width="194" height="170" rx="8" fill="#FFFFFF" stroke="#DEDDD6" stroke-width="3"/>
+  <text class="node" x="853" y="765" text-anchor="middle">竞争</text>
+  <text class="node" x="853" y="808" text-anchor="middle">更激烈</text>
+
+  <text class="small" x="108" y="1020">口播关系示意；节点不代表招聘统计数据</text>
+</svg>

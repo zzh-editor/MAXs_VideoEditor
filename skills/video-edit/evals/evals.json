@@ -1,0 +1,155 @@
+{
+  "skill_name": "video-edit",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "用 video-edit 精剪我已选好的录屏 <source.mp4>，加字幕和知识点 tips。",
+      "expected_output": "首次只询问 MAXs 或技研账号，收到回答后才询问视频类型；不能先转写或猜测账号。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "账号技研，这是课程切片。按固定片头做一个短测试，标题用参考图里的两行。",
+      "expected_output": "不重复询问已知字段；采用 MiSans VF、#ADF911、透明叠加两行标题、从超大缩小且轻微回弹；底下视频和 Swoosh 从 0 开始，标题晚视频 5 个输出帧入场，Swoosh data-volume=0.66；intro_ms=0，无黑底、无新增片长、无字幕偏移；中文字幕为简体并留在独立可编辑 Studio 轨道，渲染前确认是否烧录；测试不伪装为完整精剪成片。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "MAXs 的口播视频，删掉所有静音，字幕还用上次那个字体，直接套技研片头吧。",
+      "expected_output": "明确本次用户请求允许复用技研片头结构，但使用 MAXs #134FFF 和白色强调块文字；MiSans VF 不变；静音删除检查实际语音边界，保留必要节奏，不添加配乐。",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "我把 Maya 课程字幕放在 <source_Enhancer.srt> 了。第 11-47 条用电梯和乘客解释父子级，帮我做一段 3D 图解，别读取之前传错的音频。",
+      "expected_output": "仅解析用户指定的 SRT 11–47 条，沿用电梯/乘客比喻并映射到父变换和子物体局部坐标，构成不超过 30 秒的 Three.js 分镜；Maya 细节不超出字幕依据。确认后把动画放进主项目的可编辑 graphics 轨，保留原声与字幕，不另建项目。",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "这份中文转写里有繁体字。请按原字幕时间生成简体字幕，Studio 里要能逐条编辑，导出的 MP4 先不要烧字幕，另外附 SRT。",
+      "expected_output": "保留原始转写，先用 video-transcribe 的简体提示；若结果含繁体，在既有字幕校对阶段改成简体，不要求安装额外依赖。编号、时间轴和条目数不变；Studio 中有独立 captions 子组合轨；提供同一份审核字幕的 SRT，干净 MP4 渲染副本隐藏字幕轨但不改主项目。",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "帮我剪这段讲飞行动作的课程，重点是剪口癖、加字幕。",
+      "expected_output": "完成字幕后仍执行一次内容扫描；若字幕中的动作关系适合解释，提出有具体映射、时间段和运动方案的动画 b-roll 候选并等待确认；确认后集成到主 Studio 项目的独立 graphics 轨，静音且保留原声和字幕。没有合适候选时说明原因，不做装饰性动画。",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "这是 MAXs 的口播视频，字幕和源片都在项目里。请把 00:25 到 00:32 做成开场 Hook，原片段还保留，Hook 到正片加个转场。",
+      "expected_output": "不询问是否加品牌片头；将完整语句作为 Hook 复制到 0 秒，保留原位置并说明原声会重复；Hook 字幕与源片同步，主片图表、PIP、tips、字幕和落版整体后移；另存 Hook 版 SRT，不覆盖基线；按账号强调色加 0.24 秒推擦。",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "剪一条 LeonaDesign 直播切片，只要原声和字幕，按时间轴保留这几个回答。",
+      "expected_output": "不询问是否加品牌片头；默认从源视频开头播放，不添加额外品牌包装、配乐或音效。",
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "账号技研Labs，类型是课程切片，按我们固定的片头和音效处理。",
+      "expected_output": "不重复询问已知账号或类型，也不问是否加片头；自动使用技研课程/直播固定透明叠加片头，保留连续原声，intro_ms=0。",
+      "files": []
+    },
+    {
+      "id": 10,
+      "prompt": "01:33 字幕‘所以我们在做咨询’里把‘咨询’两个字去掉，声音不要改。",
+      "expected_output": "只修可见字幕，保持原声和 cue 时间不变；Studio 字幕轨和当前 Hook 版 SRT 同步改，源字幕/基线文件保留。",
+      "files": []
+    },
+    {
+      "id": 11,
+      "prompt": "给技研Labs 做一张 1920×1080 课程图解，底色要铺满，底部字幕区域不能有图形或文字。",
+      "expected_output": "活动图解用 #161616 全画幅铺底，不留白边；按画面高度空出至少 19% 字幕禁入区，1080p 至少 210px，文字、线条、形状和装饰都不进入。",
+      "files": []
+    },
+    {
+      "id": 12,
+      "prompt": "四张图解已渲染并通过检查，请导入当前 Premiere 工程，文件放工程目录的 hyperframes 文件夹，项目 bin 也叫 hyperframes，按 cards.json 放到对应时间。",
+      "expected_output": "先验证 Premiere 连接并只读检查当前工程、序列和轨道；确认后再移动渲染文件、不覆盖同名文件，创建或复用 hyperframes 文件夹与 bin，按 cards.json 起点插入独立静音片段，读回项目项和时间线确认结果。",
+      "files": []
+    },
+    {
+      "id": 13,
+      "prompt": "Premiere MCP 返回 Bridge 未运行，继续把图表导进去。",
+      "expected_output": "逐字转达工具返回的 nextStep；停止所有 Premiere MCP 工具调用，不重试、不改工程。",
+      "files": []
+    },
+    {
+      "id": 14,
+      "prompt": "以 /path/to/MAXs-talk-project 为例测试 MAXs 口播图表的红框安全区，项目不要修改。",
+      "expected_output": "只读检查项目或在临时副本测试；PIP+图表和纯图表共用 x=10%–88%、y=8%–59% 的内容框，段落标题可用独立标题位；报告越界元素和位置，不改原工程文件。",
+      "files": []
+    },
+    {
+      "id": 15,
+      "prompt": "给技研Labs图表设计一次冲击式特效，先从 PixelFX 找合适效果，再做成 HyperFrames 动画。",
+      "expected_output": "先在 PixelFX catalog 搜索并检查候选效果；只选能表达该知识关系的效果，换用技研Labs色彩并控制在图表区域内。实现须本地、可 seek、确定性；不把 rAF、计时器或未设种子随机逻辑带进 HyperFrames。无匹配时说明并退回合适的 HyperFrames 动效。",
+      "files": []
+    },
+    {
+      "id": 16,
+      "prompt": "上次图表风格源检查是 2026-11-03，今天要做 MAXs 图解，自动检查并融合上游新样式和动效。",
+      "expected_output": "距检查已满 7 天，查询 Diagram Design、Lieflat Charts、PixelFX 的上游版本；只融合与图表风格/动效有关的变化，保留账号主题色、MAXs 安全框和 HyperFrames 契约，并记录检查日期与 commit。",
+      "files": []
+    },
+    {
+      "id": 17,
+      "prompt": "这是刚安装的 video-edit 打包目录，请确认字幕、HyperFrames 和 Premiere 导入分支所需的技能都装好了。",
+      "expected_output": "运行依赖清单检查；缺失技能按 repository 分组通过 skills CLI 全局安装，只补缺项并验证安装路径；Premiere Pro MCP 服务没有自动安装或启动，只有用户选择导入时才按其服务流程处理。",
+      "files": []
+    },
+    {
+      "id": 18,
+      "prompt": "技研Labs做一条YouTube横屏和B站都发的16:9口播图表视频，字幕与重要标签都别被界面盖住。",
+      "expected_output": "查平台安全区选择。YouTube普通视频按中央90%标题安全参考并说明不是官方UI框；B站使用左右约80px、上约80px、字幕底边150–170px的经验值，另提供弹幕友好版再上移约80px。共同母版取保守交集，字幕和图表分别检查；不要把民间参数写成B站官方标准。",
+      "files": []
+    },
+    {
+      "id": 19,
+      "prompt": "把一条9:16口播剪成 TikTok、Instagram Reels 和 YouTube Shorts 广告，选一个字幕和图表都不会被挡的布局。",
+      "expected_output": "按每个平台官方当期广告 overlay 和版位选择遮挡区；TikTok需匹配文案长度/Anchor，Meta Reels使用14%上、35%下、6%两侧并避开右下切角，Google Shorts广告使用官方竖屏PNG框。只交一个母版时取三个官方框交集；标明这些是广告规范，不宣称是普通投稿框。",
+      "files": []
+    },
+    {
+      "id": 20,
+      "prompt": "MAXs口播字幕想模仿 HyperFrames talking-head 示例，每句都放大词到人物背后，再加一排字幕组件。",
+      "expected_output": "按 talking-head 规则先用 verbatim rail；人物背后 embed 需人物抠像且只能作稀有强调，不与字幕组件堆叠。MAXs继续禁止漂浮花字，只能按品牌规则在全屏A-Roll原字幕内高亮少数原文关键词；图表段不高亮。",
+      "files": []
+    },
+    {
+      "id": 21,
+      "prompt": "把这条 9:16 口播的中文字幕排成单行，最长几句挤不下，别缩小字号。",
+      "expected_output": "按语义边界用可靠词级时间拆分过长 cue，保留原文和总时长；同步重建 Studio captions 与 SRT。用目标字体/字号检查最长 cue，确认没有自动折成两行或横向溢出。",
+      "files": []
+    },
+    {
+      "id": 22,
+      "prompt": "给这条切片安排上方图解和底部三分之一 A-roll，保留标题贴片；图解约 20 秒，动作跟着解说推进，音效用少量可复用的。",
+      "expected_output": "A-roll 和标题贴片在同一变换容器内用双向关键帧缩成底部 PIP 并恢复；按字幕 cue 将图解节点分阶段显示到整段解说中，不在开头几秒演完后空等。用 media-use 复用少量已登记的 click/whoosh，精确同步到强调、节点和转场，音量克制；没有合适素材时省略。",
+      "files": []
+    },
+    {
+      "id": 23,
+      "prompt": "MAXs 直播切片的源画面左边和顶部都烧了活动推广字，做标题包装时别让这些字露出来，也不要裁人脸。",
+      "expected_output": "从源片均匀抽 3–5 帧定位福利卡；根据该素材实测卡片位置和大小重新定标题板边界，盖住卡片及底栏后放视频标题。保留用户未指定遮挡的其他源画面文字；标题板跟随 A-Roll 进入 PIP，不复用固定坐标。",
+      "files": []
+    },
+    {
+      "id": 24,
+      "prompt": "上一版 MAXs 直播切片的 A-roll 推近拉回看起来不好，把这段缩放撤掉；原来的图解 PIP 运动和我在 Studio 改过的字幕、轨道状态保留。",
+      "expected_output": "只移除上次新增的 A-roll 推近/拉回关键帧，恢复全屏 A-roll 原始画幅；保留既有图解 PIP 双向关键帧、标题板遮罩、用户改过的字幕文本和音轨状态。不要重建 captions 或重置轨道。",
+      "files": []
+    },
+    {
+      "id": 25,
+      "prompt": "MAXs 直播切片前一分钟想加几次推近拉回，别抠像也别裁脸。",
+      "expected_output": "只有用户明确要求时才按口播强主张加少量 A-roll 推拉，保持中心 framing，快照检查最大 scale 下完整人脸和头顶；不加人物抠像或字幕外花字。",
+      "files": []
+    }
+  ]
+}

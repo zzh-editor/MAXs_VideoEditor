@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <marker id="arrow" markerWidth="18" markerHeight="16" refX="16" refY="8" orient="auto">
+      <path d="M0,0 L18,8 L0,16 Z" fill="#ADF911"/>
+    </marker>
+    <style>
+      text { font-family: "MiSans VF", "PingFang SC", sans-serif; }
+      .title { font-size: 62px; font-weight: 700; fill: #F5F5F5; }
+      .sub { font-size: 30px; fill: #A9A9A9; }
+      .label { font-size: 34px; font-weight: 700; fill: #1C1C1A; }
+      .body { font-size: 32px; fill: #F5F5F5; }
+      .small { font-size: 26px; fill: #A9A9A9; }
+    </style>
+  </defs>
+  <rect width="1920" height="1080" fill="#161616"/>
+  <text class="title" x="144" y="142">父级带动整体，子级保留局部</text>
+  <text class="sub" x="144" y="195">层级变换示意：先看父级，再看子级自己的坐标</text>
+  <line x1="144" y1="240" x2="1776" y2="240" stroke="#444444" stroke-width="2"/>
+
+  <rect x="170" y="315" width="780" height="420" rx="12" fill="none" stroke="#ADF911" stroke-width="5"/>
+  <text x="210" y="375" fill="#ADF911" font-size="30" font-weight="700" font-family="MiSans VF, PingFang SC, sans-serif">父级 Group</text>
+  <rect x="380" y="455" width="360" height="180" rx="8" fill="#ADF911"/>
+  <text class="label" x="560" y="535" text-anchor="middle"><tspan x="560">子物体</tspan><tspan x="560" dy="48">局部变换</tspan></text>
+  <text class="small" x="210" y="690">父级移动时，子物体随组移动</text>
+
+  <path d="M950 525 H1090" fill="none" stroke="#ADF911" stroke-width="5" marker-end="url(#arrow)"/>
+  <text class="body" x="1190" y="430">世界空间</text>
+  <text x="1190" y="520" fill="#ADF911" font-size="34" font-weight="700" font-family="MiSans VF, PingFang SC, sans-serif">Mworld = Mparent × Mlocal</text>
+  <text class="small" x="1190" y="585">父级矩阵乘子级局部矩阵</text>
+  <text class="small" x="1190" y="635">旋转、缩放和位移需按矩阵顺序计算</text>
+  <line x1="144" y1="835" x2="1776" y2="835" stroke="#444444" stroke-width="2"/>
+  <text class="small" x="144" y="884">课程关系示意；具体通道和节点以当前 Maya 工程为准</text>
+  <!-- y=875..1080 remains clear for captions -->
+</svg>

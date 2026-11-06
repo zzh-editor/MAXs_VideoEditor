@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-11-03",
+  "interval_days": 7,
+  "sources": [
+    {
+      "id": "diagram-design",
+      "repository": "https://github.com/cathrynlavery/diagram-design",
+      "skill_path": "skills/diagram-design/SKILL.md",
+      "head": "3eb03b8d2984e47ddd9b083db9abdcdaa3c69635",
+      "version": "2.6"
+    },
+    {
+      "id": "lieflat-charts",
+      "repository": "https://github.com/larashero3-dotcom/lieflat-charts",
+      "skill_path": "SKILL.md",
+      "head": "75c697872e622a34471bec875874c038b37da89f",
+      "license": "PolyForm Noncommercial 1.0.0"
+    },
+    {
+      "id": "pixelfx",
+      "repository": "https://github.com/patch-gg/pixelfx",
+      "skill_path": "skills/pixelfx/SKILL.md",
+      "head": "a84159688af3ca37a4be05a0d422b94451b2e24e"
+    }
+  ]
+}

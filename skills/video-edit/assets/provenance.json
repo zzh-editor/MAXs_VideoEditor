@@ -1,0 +1,16 @@
+[
+  {
+    "asset": "assets/fonts/MiSansVF.ttf",
+    "source": "user-provided local font file",
+    "sha256": "0ddef90648998900175cfdca9a6f087a2544c182f130b0ad4f7e94a03a115e79",
+    "bytes": 20093424,
+    "provided_by": "user"
+  },
+  {
+    "asset": "assets/audio/Swoosh_01.wav",
+    "source": "user-provided local audio file",
+    "sha256": "4c956135e75f1ea089d2925b87a2a089ed91e4fdefa0f25e006deff16fe63c55",
+    "bytes": 269856,
+    "provided_by": "user"
+  }
+]

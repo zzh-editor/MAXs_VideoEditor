@@ -10,7 +10,7 @@
     {
       "id": 2,
       "prompt": "账号技研，这是课程切片。按固定片头做一个短测试，标题用参考图里的两行。",
-      "expected_output": "不重复询问已知字段；采用 MiSans VF、#ADF911、透明叠加两行标题、从超大缩小且轻微回弹；底下视频和 Swoosh 从 0 开始，标题晚视频 5 个输出帧入场，Swoosh data-volume=0.66；intro_ms=0，无黑底、无新增片长、无字幕偏移；中文字幕为简体并留在独立可编辑 Studio 轨道，渲染前确认是否烧录；测试不伪装为完整精剪成片。",
+      "expected_output": "不重复询问已知字段；采用 MiSans VF、#ADF911、透明叠加两行标题、从超大缩小且轻微回弹；底下视频和 Swoosh 从 0 开始，标题晚视频 5 个输出帧入场，Swoosh data-volume=0.66；intro_ms=0，无黑底、无新增片长、无字幕偏移；中文字幕为简体并留在独立可编辑 Studio 轨道；若渲染，默认烧录并在 renders/ 输出同名 SRT 与续编说明；测试不伪装为完整精剪成片。",
       "files": []
     },
     {
@@ -22,13 +22,13 @@
     {
       "id": 4,
       "prompt": "我把 Maya 课程字幕放在 <source_Enhancer.srt> 了。第 11-47 条用电梯和乘客解释父子级，帮我做一段 3D 图解，别读取之前传错的音频。",
-      "expected_output": "仅解析用户指定的 SRT 11–47 条，沿用电梯/乘客比喻并映射到父变换和子物体局部坐标，构成不超过 30 秒的 Three.js 分镜；Maya 细节不超出字幕依据。确认后把动画放进主项目的可编辑 graphics 轨，保留原声与字幕，不另建项目。",
+      "expected_output": "仅解析用户指定的 SRT 11–47 条，沿用电梯/乘客比喻并映射到父变换和子物体局部坐标，构成不超过 30 秒的 Three.js 分镜；先读包内 chart-style-sources.md 与 examples/diagrams/ 的 SVG/PNG 样例作为风格依据，Maya 细节不超出字幕依据。确认后把动画放进主项目的可编辑 graphics 轨，保留原声与字幕，不另建项目。",
       "files": []
     },
     {
       "id": 5,
       "prompt": "这份中文转写里有繁体字。请按原字幕时间生成简体字幕，Studio 里要能逐条编辑，导出的 MP4 先不要烧字幕，另外附 SRT。",
-      "expected_output": "保留原始转写，先用 video-transcribe 的简体提示；若结果含繁体，在既有字幕校对阶段改成简体，不要求安装额外依赖。编号、时间轴和条目数不变；Studio 中有独立 captions 子组合轨；提供同一份审核字幕的 SRT，干净 MP4 渲染副本隐藏字幕轨但不改主项目。",
+      "expected_output": "保留原始转写，先用 video-transcribe 的简体提示；若结果含繁体，在既有字幕校对阶段改成简体，不要求安装额外依赖。编号、时间轴和条目数不变；Studio 中有独立 captions 子组合轨；尊重用户明确的无字幕要求，只在临时渲染副本隐藏字幕轨，主轨不变；在 renders/ 保存同名 SRT 与续编说明。",
       "files": []
     },
     {
@@ -149,6 +149,18 @@
       "id": 25,
       "prompt": "MAXs 直播切片前一分钟想加几次推近拉回，别抠像也别裁脸。",
       "expected_output": "只有用户明确要求时才按口播强主张加少量 A-roll 推拉，保持中心 framing，快照检查最大 scale 下完整人脸和头顶；不加人物抠像或字幕外花字。",
+      "files": []
+    },
+    {
+      "id": 26,
+      "prompt": "字幕已经校对，HyperFrames 项目也通过检查。请直接渲染成片。",
+      "expected_output": "不再询问字幕模式，默认烧录可见字幕轨；把同一份最终简体 SRT 复制到 renders/ 并与 MP4 同名；额外生成续编说明，指导用户归档整个工程及下次通过 video-edit 和 HyperFrames Studio 继续编辑。",
+      "files": []
+    },
+    {
+      "id": 27,
+      "prompt": "我只安装了 video-edit，没有安装 diagram-design、lieflat-charts 或 pixelfx。请给 MAXs 做一张校招/社招对比图，确认他人也能按技能包里的来源画出同样的品牌风格。",
+      "expected_output": "直接使用随技能包安装的 chart-style-sources.md、brand-and-opening.md 和 MAXs SVG/PNG 示例作为权威风格来源；按当前字幕内容重画，不要求安装可选图库、不照抄示例文案或数据，并在渲染预览中检查颜色、安全框和版式。",
       "files": []
     }
   ]

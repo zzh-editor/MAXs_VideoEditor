@@ -29,6 +29,6 @@
   <text class="small" x="1190" y="585">父级矩阵乘子级局部矩阵</text>
   <text class="small" x="1190" y="635">旋转、缩放和位移需按矩阵顺序计算</text>
   <line x1="144" y1="835" x2="1776" y2="835" stroke="#444444" stroke-width="2"/>
-  <text class="small" x="144" y="884">课程关系示意；具体通道和节点以当前 Maya 工程为准</text>
+  <text class="small" x="144" y="800">课程关系示意；具体通道和节点以当前 Maya 工程为准</text>
   <!-- y=875..1080 remains clear for captions -->
 </svg>

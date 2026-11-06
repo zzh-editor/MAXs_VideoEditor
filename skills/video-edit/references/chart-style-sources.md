@@ -1,6 +1,15 @@
 # 图表风格来源与使用边界
 
-这些上游是图表审美和特效词汇的来源，不替代 `video-edit` 的品牌色、字幕位置、HyperFrames 时间线和可编辑交付规则。
+本 skill 内的品牌规范、图解规则和示例 SVG 是成片风格的权威来源；安装后不依赖外部图库也能按同一标准制作。外部项目只补充图型/动效词汇，不能覆盖这里的规则。
+
+## 包内样式源
+
+| 账号 | 权威规则 | 随 skill 附带的可编辑示例 |
+| --- | --- | --- |
+| MAXs | 本文件及 `brand-and-opening.md` | `examples/diagrams/maxs-recruitment-pools.svg`、`examples/diagrams/maxs-study-timeline.svg` |
+| 技研Labs | 本文件及 `brand-and-opening.md` | `examples/diagrams/jiyan-parent-child.svg`、`examples/diagrams/jiyan-model-pipeline.svg` |
+
+同目录 PNG 是对应 SVG 的渲染预览；需要核对网格、颜色、留白和节点关系时，以 SVG 源文件和本文件规则为准。新增图解应从这些源例子学习排版约束，再按当前字幕内容重画，不能照搬示例里的数据或文案。
 
 ## MAXs：Diagram Design
 

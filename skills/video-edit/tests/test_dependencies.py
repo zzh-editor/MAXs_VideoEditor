@@ -29,6 +29,15 @@ class DependencyTests(unittest.TestCase):
         self.assertTrue((SKILL_DIR / "assets/audio/Swoosh_01.wav").is_file())
         self.assertTrue((SKILL_DIR / "assets/jiyan-opener.html").is_file())
 
+    def test_authoritative_chart_sources_and_previews_are_bundled(self):
+        self.assertTrue((SKILL_DIR / "references/chart-style-sources.md").is_file())
+        examples = ["maxs-recruitment-pools", "maxs-study-timeline",
+                    "jiyan-parent-child", "jiyan-model-pipeline"]
+        for name in examples:
+            for extension in ("svg", "png"):
+                with self.subTest(example=name, extension=extension):
+                    self.assertTrue((SKILL_DIR / f"examples/diagrams/{name}.{extension}").is_file())
+
     def test_existing_skills_are_found_in_either_global_root(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

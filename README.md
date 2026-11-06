@@ -20,7 +20,7 @@ python3 "$SKILL_DIR/scripts/ensure_dependencies.py" --check
 python3 "$SKILL_DIR/scripts/ensure_dependencies.py" --install-missing
 ```
 
-依赖按来源仓库分组安装，清单在 [`skills/video-edit/references/dependencies.json`](skills/video-edit/references/dependencies.json)。HyperFrames 的格式、动画、音频与 Studio 说明已合并进 `hyperframes` / `hyperframes-cli`，不再单独安装仓库已退役的拆分 skill。账号色彩、安全框、字幕规范、图解规则和 4 组可编辑 SVG/PNG 风格示例都随 `video-edit` 安装，并作为图解输出的权威依据；`diagram-design`、`lieflat-charts`、`pixelfx` 只是可选补充，不会阻塞基础安装。首次安装可能要克隆较大的 HyperFrames 仓库，依赖脚本默认把克隆超时设为 10 分钟。
+依赖按来源仓库分组安装，清单在 [`skills/video-edit/references/dependencies.json`](skills/video-edit/references/dependencies.json)。HyperFrames 的格式、动画、音频与 Studio 说明已合并进 `hyperframes` / `hyperframes-cli`，不再单独安装仓库已退役的拆分 skill。账号色彩、安全框、字幕规范、图解规则和 4 组可编辑 SVG 原稿及对应 PNG 预览都随 `video-edit` 安装；图解以包内规则和 SVG 为准，`diagram-design`、`lieflat-charts`、`pixelfx` 只是可选补充，不会阻塞基础安装。首次安装可能要克隆较大的 HyperFrames 仓库，依赖脚本默认把克隆超时设为 10 分钟。
 
 仓库自带 MiSans VF、技研Labs 固定片头 Swoosh、剪辑/字幕脚本、参考文档、测试和图表示例。渲染需要 Chrome Headless Shell；可运行 `npx hyperframes doctor --json` 检查，缺少浏览器时运行 `npx hyperframes browser ensure`。Premiere Pro、MCP 服务和 Bridge 只在用户要求导入图解时需要，不是基本剪辑和渲染的前置条件。
 
@@ -29,7 +29,7 @@ python3 "$SKILL_DIR/scripts/ensure_dependencies.py" --install-missing
 1. **查看源片并粗剪。** 从源片均匀抽 3–5 帧，确认画幅、人脸位置和画面已烧录的文字。未粗剪的素材先读字幕与画面，按句意、操作和必要停顿做保守粗剪；粗剪供人审核后再包装。用户已提供人工精剪版时，以该版本为准，不重复改剪。
 2. **定稿字幕。** 使用词级时间对齐和校对简体字幕。竖屏字幕单行显示，超宽 cue 按语义边界拆分，不靠缩小字号或自动折行。Studio captions 轨与 SRT 必须来自同一份定稿。
 3. **按账号包装。** 标题、颜色、字体、字幕强调和图解遵循下方账号规范。源片有硬烧录福利卡时，先定位卡片文字区域，再按这条素材实际边界做遮罩；图解节点跟着口播 cue 出现。
-4. **检查并交付。** 运行 `npm run check`，对开场、遮罩、字幕、PIP、图解和结尾抽帧；开 HyperFrames 预览供人审核。MP4 默认烧录字幕；每次渲染会在 `renders/` 放同名 SRT 和续编说明，说明如何归档完整工程及下次通过 agent 和 HyperFrames Studio 继续处理反馈。
+4. **检查并交付。** 运行 `npm run check`，对开场、遮罩、字幕、PIP、图解和结尾抽帧；打开 HyperFrames Studio 预览。用户已要求渲染时，检查通过后直接渲染；否则停在预览等确认。MP4 默认烧录字幕；每次渲染会在 `renders/` 放同名 SRT 和续编说明，说明如何归档完整工程及下次通过 agent 和 HyperFrames Studio 继续处理反馈。
 
 完整入口见 [`skills/video-edit/SKILL.md`](skills/video-edit/SKILL.md)，详细规则在 [`skills/video-edit/references/`](skills/video-edit/references/)。
 

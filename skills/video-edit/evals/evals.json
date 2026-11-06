@@ -162,6 +162,12 @@
       "prompt": "我只安装了 video-edit，没有安装 diagram-design、lieflat-charts 或 pixelfx。请给 MAXs 做一张校招/社招对比图，确认他人也能按技能包里的来源画出同样的品牌风格。",
       "expected_output": "直接使用随技能包安装的 chart-style-sources.md、brand-and-opening.md 和 MAXs SVG/PNG 示例作为权威风格来源；按当前字幕内容重画，不要求安装可选图库、不照抄示例文案或数据，并在渲染预览中检查颜色、安全框和版式。",
       "files": []
+    },
+    {
+      "id": 28,
+      "prompt": "把更新版渲染到 renders/clip.mp4；renders/clip.srt 和 renders/clip_续编说明.txt 已经存在，旧版要留着。",
+      "expected_output": "不覆盖任何旧文件；从 _v2 开始递增检查，直到 MP4、同名 SRT 和续编说明三条路径都空闲，再统一使用同一新主名。",
+      "files": []
     }
   ]
 }

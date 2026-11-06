@@ -1,6 +1,7 @@
 import importlib.util
 import json
 from pathlib import Path
+import re
 import tempfile
 import unittest
 
@@ -37,6 +38,14 @@ class DependencyTests(unittest.TestCase):
             for extension in ("svg", "png"):
                 with self.subTest(example=name, extension=extension):
                     self.assertTrue((SKILL_DIR / f"examples/diagrams/{name}.{extension}").is_file())
+
+    def test_jiyan_diagram_text_stays_above_caption_safe_band(self):
+        for name in ["jiyan-parent-child", "jiyan-model-pipeline"]:
+            source = (SKILL_DIR / f"examples/diagrams/{name}.svg").read_text()
+            text_y = [int(value) for value in re.findall(r"<text\b[^>]*\by=\"(\d+)\"", source)]
+            with self.subTest(example=name):
+                self.assertTrue(text_y)
+                self.assertLess(max(text_y), 820)
 
     def test_existing_skills_are_found_in_either_global_root(self):
         with tempfile.TemporaryDirectory() as temp:

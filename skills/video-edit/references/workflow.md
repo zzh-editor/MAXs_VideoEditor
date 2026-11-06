@@ -18,7 +18,7 @@
 
 ## 渲染后交付与续编说明
 
-每个交付 MP4 `renders/<basename>.mp4` 都要有同名字幕 `renders/<basename>.srt`，以及 `renders/<basename>_续编说明.txt`。SRT 与 Studio 当前最终字幕一致；MP4 默认烧录字幕，用户明确要求无字幕时才在临时导出副本隐藏字幕轨。不要覆盖原始字幕或已有同名输出。
+每个交付 MP4 `renders/<basename>.mp4` 都要有同名字幕 `renders/<basename>.srt`，以及 `renders/<basename>_续编说明.txt`。SRT 与 Studio 当前最终字幕一致；MP4 默认烧录字幕，用户明确要求无字幕时才在临时导出副本隐藏字幕轨。若任一目标名已存在，给三件输出统一换主名，从 `_v2` 开始递增，直到 MP4、SRT、说明文件三个路径都未占用；不覆盖旧件。
 
 续编说明应写明如何保存项目：归档或复制整个 HyperFrames 项目文件夹，不要只保留 MP4；保留源素材、`assets/`、`compositions/`、`index.html`、`meta.json`、`package.json` / lockfile、`BRIEF.md` / `frame.md`、`transcript/` 和 `renders/`。需要保留项目历史时连同隐藏的 `.hyperframes/` 一起备份。项目移动后以新目录为准，不要在说明里假定固定绝对路径。
 

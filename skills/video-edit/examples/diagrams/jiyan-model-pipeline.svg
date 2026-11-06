@@ -42,5 +42,5 @@
   <text class="detail" x="1410" y="735">极限姿势和穿插</text>
   <line x1="144" y1="835" x2="1776" y2="835" stroke="#444444" stroke-width="2"/>
   <text class="detail" x="144" y="800">教学流程示意；节点名称和检查内容按课程实际操作替换</text>
-  <!-- y=875..1080 remains clear for captions -->
+  <!-- y=870..1080 remains clear for captions (210 px minimum) -->
 </svg>

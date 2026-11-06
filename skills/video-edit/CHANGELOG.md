@@ -1,5 +1,9 @@
 # 更新记录
 
+## 1.0.4
+
+- 图表风格和示例随包提供；Diagram Design、Lieflat Charts、PixelFX 改为可选参考，不再阻塞基础安装。
+
 ## 1.0.3
 
 - 依赖安装默认允许大型上游仓库最多克隆 10 分钟；保留 `SKILLS_CLONE_TIMEOUT_MS` 覆盖能力。

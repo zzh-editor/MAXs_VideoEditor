@@ -4,7 +4,7 @@
 
 ## MAXs：Diagram Design
 
-读取全局 `diagram-design` skill。MAXs 图表沿用它的编辑式结构：先判断语义关系再选图型，坐标与间距落在 4px 网格，密度克制，通常只留 1–2 个焦点，删掉不承载信息的节点和连线；不加阴影。
+本参考已包含 MAXs 的核心图表规范；`diagram-design` 是可选的图型目录，不属于基础安装依赖。已安装时可加载它查具体图型，未安装时按本参考和 README 示例制作。先判断语义关系再选图型，坐标与间距落在 4px 网格，密度克制，通常只留 1–2 个焦点，删掉不承载信息的节点和连线；不加阴影。
 
 - 颜色和文字以 `brand-and-opening.md` 为准：MAXs 蓝 `#134FFF`、MiSans VF。Diagram Design 默认的橙色、字体和网页模板都不覆盖项目品牌。
 - Diagram Design v2.6 增加了极坐标、瀑布、热力、结构变化和轴测图等类型；动效规则采用 `none/reveal/step/loop`，默认静帧完整，动效只解释顺序或变化，并考虑 reduced-motion。视频仍用 HyperFrames 的 seek-safe GSAP 时间线，不搬用滚动触发、点击控件或运行时 timer。
@@ -12,7 +12,7 @@
 
 ## 技研Labs：Lieflat Charts
 
-读取全局 `lieflat-charts` skill。按关系和阅读速度从 Lupi Editorial、Lupi Basics 等体系中找版式参考：真实节点与关系优先、单图单结论、线条和留白有秩序，避免等宽卡片堆叠。概念 b-roll 没有真实量值时，不把它硬套成数据图，也不编造数值。
+`lieflat-charts` 是可选的排版参考，不属于基础安装依赖。其核心约束已写在本参考和 README 示例中：真实节点与关系优先、单图单结论、线条和留白有秩序，避免等宽卡片堆叠。概念 b-roll 没有真实量值时，不把它硬套成数据图，也不编造数值。
 
 - 颜色、字体和画幅规则仍以项目 `frame.md` 和 `brand-and-opening.md` 为准：`#ADF911`、MiSans VF、活动图解全画幅 `#161616`，底部字幕安全区留空。Lieflat 的四像素网格、单一重心、模板选择和色阶表达可作结构参考；用 HyperFrames 子组合重写，不搬 gallery 代码。
 - Lieflat 当前规则偏快的 `quarticOut`、默认不弹跳、按序 stagger，并支持 `prefers-reduced-motion`。借用克制的节奏，不照搬网页 scroll/click 控制和毫秒级 stagger；按 HyperFrames 帧率与字幕阅读时间重排。
@@ -20,7 +20,7 @@
 
 ## 效果：PixelFX
 
-当图表的知识点确实需要一次冲击、显现、消散、扫描或转场时，读取已安装的 `pixelfx` skill，并从该技能提供的 catalog / source checkout 搜索对应效果；不要依赖某台机器上的固定绝对路径：
+当图表的知识点确实需要一次冲击、显现、消散、扫描或转场时，`pixelfx` 是可选素材库，不属于基础安装依赖。已安装时按它的 catalog/source checkout 搜索对应效果；未安装时改用 HyperFrames 原生动效，不为此阻塞视频制作：
 
 1. 先用 `node tools/list.mjs <关键词>` 或 `docs/CATALOG.md` 找候选，阅读候选效果与 `meta.options`，再渲染预览并看过完整动作；不要只凭名字选。复用安装提供的源码，不把整库复制进视频项目。
 2. 只用一个能解释当前图表关系的效果；可调整 `palette` 适配账号色，但 MAXs 蓝和技研Labs 绿仍由品牌规则决定。像素风格与内容不合时，只借用动作节奏并用原有图形重做，不硬贴 sprite。
@@ -33,8 +33,8 @@
 
 版本、commit 和最近检查日期记录在 `style-upstreams.json`。每次进入图表或动效设计分支时读取该文件；用户明确要求更新，或 `checked_at` 已满 7 天时：
 
-1. 查询三个仓库 `main` 的 HEAD；用 `npx skills update diagram-design lieflat-charts pixelfx --global --yes` 更新全局 skill 副本。PixelFX 源码 checkout 若由其安装流程维护，按该 skill 的说明更新。
-2. 只审阅与图型、视觉、动效、无障碍或输出契约相关的变化，按本文件边界更新图表规则；不让上游主题色覆盖账号颜色，也不覆盖 HyperFrames 或 MAXs 安全框规则。
-3. 若上游重置了纯英文 description，按全局技能维护规则只翻译 description，保留技术名和触发词。所有查询成功后再更新 JSON 里的 `checked_at` 与 HEAD；任一网络检查失败时保留旧日期并报告未完成。
+1. 用 `git ls-remote --heads <repository> main` 查询三个仓库 HEAD；不要为版本检查克隆整库或自动安装这些可选 skills。
+2. 有更新时只融合能公开读取且与图型、视觉、动效、无障碍或输出契约有关的规则；不让上游主题色覆盖账号颜色，也不覆盖 HyperFrames 或 MAXs 安全框规则。
+3. 只有所有查询成功后才更新 JSON 里的 `checked_at` 与 HEAD；任一网络检查失败时保留旧日期并报告未完成。只有用户明确要求调用某个上游 skill 时，才按其许可证和安装方式获取。
 
 检查在下一次相关 `video-edit` 调用时触发，不运行后台定时任务。

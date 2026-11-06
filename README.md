@@ -20,7 +20,7 @@ python3 "$SKILL_DIR/scripts/ensure_dependencies.py" --check
 python3 "$SKILL_DIR/scripts/ensure_dependencies.py" --install-missing
 ```
 
-依赖按来源仓库分组安装，清单在 [`skills/video-edit/references/dependencies.json`](skills/video-edit/references/dependencies.json)。HyperFrames 的格式、动画、音频与 Studio 说明已合并进 `hyperframes` / `hyperframes-cli`，不再单独安装仓库已退役的拆分 skill。图表指南、账号色彩、安全框和字幕规则均随 `video-edit` 一起安装；`diagram-design`、`lieflat-charts`、`pixelfx` 等上游 skill 用于各自的专项参考。首次安装可能要克隆较大的 HyperFrames 仓库，依赖脚本默认把克隆超时设为 10 分钟。
+依赖按来源仓库分组安装，清单在 [`skills/video-edit/references/dependencies.json`](skills/video-edit/references/dependencies.json)。HyperFrames 的格式、动画、音频与 Studio 说明已合并进 `hyperframes` / `hyperframes-cli`，不再单独安装仓库已退役的拆分 skill。账号色彩、安全框、字幕规范和图解基础规则均随 `video-edit` 一起安装，另附 4 张图表示例；`diagram-design`、`lieflat-charts`、`pixelfx` 只是可选参考，不会阻塞基础安装。首次安装可能要克隆较大的 HyperFrames 仓库，依赖脚本默认把克隆超时设为 10 分钟。
 
 仓库自带 MiSans VF、技研Labs 固定片头 Swoosh、剪辑/字幕脚本、参考文档、测试和图表示例。渲染需要 Chrome Headless Shell；可运行 `npx hyperframes doctor --json` 检查，缺少浏览器时运行 `npx hyperframes browser ensure`。Premiere Pro、MCP 服务和 Bridge 只在用户要求导入图解时需要，不是基本剪辑和渲染的前置条件。
 
@@ -87,4 +87,6 @@ python3 -m unittest discover -s skills/video-edit/tests
 python3 skills/video-edit/scripts/ensure_dependencies.py --check
 ```
 
-`lieflat-charts` 使用 PolyForm Noncommercial。本 skill 仅引用其公开视觉原则，不复制其代码、模板和素材；商业发布时需遵守该依赖的许可证。Premiere Pro 服务、MAXs 官方落版素材均不随仓库提供，缺少时按需向使用者索取，不依赖个人电脑绝对路径。
+`lieflat-charts` 是可选参考，使用 PolyForm Noncommercial。本 skill 仅引用其公开视觉原则，不复制其代码、模板和素材；商业发布时需遵守该依赖的许可证。Premiere Pro 服务、MAXs 官方落版素材均不随仓库提供，缺少时按需向使用者索取，不依赖个人电脑绝对路径。
+
+仓库当前未声明整体许可证。MiSans VF 和 Swoosh 是随包的用户提供资产；公开分发或用于其他品牌前，请先确认相应授权。第三方 Agent Skills 由安装脚本从各自上游仓库获取，使用前请审阅其安全与许可证说明。

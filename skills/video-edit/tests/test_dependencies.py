@@ -13,15 +13,16 @@ SPEC.loader.exec_module(MODULE)
 
 
 class DependencyTests(unittest.TestCase):
-    def test_manifest_includes_style_sources_but_not_retired_general_video(self):
+    def test_manifest_requires_editing_skills_but_not_optional_style_sources(self):
         manifest = json.loads((SKILL_DIR / "references" / "dependencies.json").read_text())
         skills = {skill for source in manifest["sources"] for skill in source["skills"]}
-        retired = {"general-video", "hyperframes-core", "hyperframes-animation",
-                   "hyperframes-keyframes", "hyperframes-audio", "hyperframes-studio",
-                   "hyperframes-creative"}
-        self.assertTrue(retired.isdisjoint(skills))
+        optional = {"general-video", "hyperframes-core", "hyperframes-animation",
+                    "hyperframes-keyframes", "hyperframes-audio", "hyperframes-studio",
+                    "hyperframes-creative", "diagram-design", "lieflat-charts", "pixelfx"}
+        self.assertTrue(optional.isdisjoint(skills))
         self.assertTrue({"hyperframes", "hyperframes-cli", "hyperframes-registry", "media-use"}.issubset(skills))
-        self.assertTrue({"diagram-design", "lieflat-charts", "pixelfx"}.issubset(skills))
+        self.assertTrue((SKILL_DIR / "references/chart-style-sources.md").is_file())
+        self.assertTrue((SKILL_DIR / "examples/diagrams/maxs-recruitment-pools.png").is_file())
 
     def test_required_local_assets_are_bundled(self):
         self.assertTrue((SKILL_DIR / "assets/fonts/MiSansVF.ttf").is_file())

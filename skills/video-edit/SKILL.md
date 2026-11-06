@@ -5,7 +5,7 @@ description: 用 HyperFrames 制作或修改课程切片、直播切片和口播
 
 # Video Edit
 
-当前版本：`1.0.3`。
+当前版本：`1.0.4`。
 
 交付可编辑 HyperFrames 项目和与时间线一致的简体中文字幕 SRT。默认保守精剪，保留原意和教学操作；字幕始终放在独立的 Studio 字幕轨，不直接写入源视频。渲染 MP4 前询问是否烧录字幕。字幕完成后必须扫描内容，提出并在用户确认后制作有内容依据的动画 b-roll。用户仅要求安装、修改技能或试片时，不处理视频。
 
@@ -45,7 +45,7 @@ MAXs 包装源视频时抽 3–5 帧定位福利卡文字，再按本条素材�
 | 动效、缩放、组件复用 | `hyperframes`、`hyperframes-registry` |
 | 音效增益、预览、渲染 | `media-use`、`hyperframes-cli` |
 | 本地素材登记、后续包装规范 | `media-use`、`hyperframes` |
-| 图表风格与动效特效 | `references/chart-style-sources.md`、`diagram-design`、`lieflat-charts`、`pixelfx` |
+| 图表风格与动效特效 | `references/chart-style-sources.md`；已安装时可选 `diagram-design`、`lieflat-charts`、`pixelfx` |
 | talking-head 结构与 HyperFrames 时间线规范 | `references/hyperframes-talking-head.md` |
 | 渲染后导入 Premiere Pro | `premiere-pro-mcp`、`references/premiere-import.md` |
 

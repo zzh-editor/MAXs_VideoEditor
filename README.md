@@ -20,7 +20,7 @@ python3 "$SKILL_DIR/scripts/ensure_dependencies.py" --check
 python3 "$SKILL_DIR/scripts/ensure_dependencies.py" --install-missing
 ```
 
-依赖按来源仓库分组安装，清单在 [`skills/video-edit/references/dependencies.json`](skills/video-edit/references/dependencies.json)。HyperFrames 的格式、动画、音频与 Studio 说明已合并进 `hyperframes` / `hyperframes-cli`，不再单独安装仓库已退役的拆分 skill。图表指南、账号色彩、安全框和字幕规则均随 `video-edit` 一起安装；`diagram-design`、`lieflat-charts`、`pixelfx` 等上游 skill 用于各自的专项参考。
+依赖按来源仓库分组安装，清单在 [`skills/video-edit/references/dependencies.json`](skills/video-edit/references/dependencies.json)。HyperFrames 的格式、动画、音频与 Studio 说明已合并进 `hyperframes` / `hyperframes-cli`，不再单独安装仓库已退役的拆分 skill。图表指南、账号色彩、安全框和字幕规则均随 `video-edit` 一起安装；`diagram-design`、`lieflat-charts`、`pixelfx` 等上游 skill 用于各自的专项参考。首次安装可能要克隆较大的 HyperFrames 仓库，依赖脚本默认把克隆超时设为 10 分钟。
 
 仓库自带 MiSans VF、技研Labs 固定片头 Swoosh、剪辑/字幕脚本、参考文档、测试和图表示例。渲染需要 Chrome Headless Shell；可运行 `npx hyperframes doctor --json` 检查，缺少浏览器时运行 `npx hyperframes browser ensure`。Premiere Pro、MCP 服务和 Bridge 只在用户要求导入图解时需要，不是基本剪辑和渲染的前置条件。
 

@@ -37,6 +37,12 @@ def install_command(repository, skills, agent="opencode"):
     ]
 
 
+def install_environment(environment=None):
+    env = dict(os.environ if environment is None else environment)
+    env.setdefault("SKILLS_CLONE_TIMEOUT_MS", "600000")
+    return env
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="only report missing skills")
@@ -61,7 +67,8 @@ def main():
 
     for repository, skills in missing.items():
         try:
-            subprocess.run(install_command(repository, skills, manifest["agent"]), check=True)
+            subprocess.run(install_command(repository, skills, manifest["agent"]),
+                           check=True, env=install_environment())
         except (OSError, subprocess.CalledProcessError) as exc:
             print(f"Could not install {repository}: {exc}", file=sys.stderr)
             return 2

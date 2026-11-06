@@ -57,6 +57,11 @@ class DependencyTests(unittest.TestCase):
             "--skill", "one", "two", "--yes",
         ])
 
+    def test_large_repository_timeout_has_a_safe_default_and_can_be_overridden(self):
+        self.assertEqual(MODULE.install_environment({})["SKILLS_CLONE_TIMEOUT_MS"], "600000")
+        self.assertEqual(MODULE.install_environment({"SKILLS_CLONE_TIMEOUT_MS": "900000"})[
+            "SKILLS_CLONE_TIMEOUT_MS"], "900000")
+
 
 if __name__ == "__main__":
     unittest.main()

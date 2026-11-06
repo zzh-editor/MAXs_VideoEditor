@@ -23,7 +23,7 @@ test -f "$SKILL_DIR/SKILL.md" || SKILL_DIR="$HOME/.config/opencode/skills/video-
 python3 "$SKILL_DIR/scripts/ensure_dependencies.py" --install-missing
 ```
 
-依赖按 `references/dependencies.json` 的来源仓库分组安装。HyperFrames 已将 `general-video` 并入 `hyperframes`，不再单独安装已退役的 skill。MAXs 与技研Labs 风格、安全框、字幕交接和导入规则都包含在本仓库。
+依赖按 `references/dependencies.json` 的来源仓库分组安装。HyperFrames 已将 `general-video` 并入 `hyperframes`，不再单独安装已退役的 skill。MAXs 与技研Labs 风格、安全框、字幕交接和导入规则都包含在本仓库。首次安装可能需要克隆较大的 HyperFrames 仓库；脚本默认给 skills CLI 10 分钟，网络较慢时可把 `SKILLS_CLONE_TIMEOUT_MS` 设得更长。
 
 ## 随包资源与外部要求
 

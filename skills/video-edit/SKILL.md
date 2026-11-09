@@ -5,7 +5,7 @@ description: 用 HyperFrames 制作或修改 MAXs、技研Labs、LeonaDesign 的
 
 # Video Edit
 
-当前版本：`1.0.6`。
+当前版本：`1.1.2`。
 
 交付可编辑 HyperFrames 项目和与时间线一致的简体中文字幕 SRT。默认保守精剪，保留原意和教学操作；字幕始终放在独立的 Studio 字幕轨，不直接写入源视频。MP4 默认烧录字幕；用户明确要求无字幕时才覆盖默认。每次 MP4 渲染还要在 `renders/` 放同名 SRT 和续编说明。字幕完成后扫描内容；候选图解需用户确认，用户已指定图解内容和字幕区间时直接制作。用户仅要求安装、修改技能或试片时，不处理视频。
 
@@ -15,7 +15,7 @@ description: 用 HyperFrames 制作或修改 MAXs、技研Labs、LeonaDesign 的
 - 在 Studio 建一个独立的 `data-track-kind="captions"` 子组合轨道。SRT 是同一份审核字幕的独立文件；不要把字幕做成视频像素或合并进 A-roll。
 - MP4 默认把当前可见字幕轨烧录进画面；只有用户明确要求无字幕 MP4 时，才在临时副本中隐藏字幕轨，不能改写用户可编辑的主项目轨道。两种模式都要把同一份审核后的简体 SRT 复制到 `renders/<成片文件名>.srt`。交付与续编说明见 `references/workflow.md`。
 - 竖屏字幕按 A-roll / chart-PIP 两种位置模式排版。取消独立漂浮花字；只在无图表的全屏 A-roll 字幕内高亮具体关键词/短语，不整行变色、不加字幕中没有的新词。MAXs 规则见 `references/brand-and-opening.md`，坐标与分段见 `references/subtitle-handoff.md`；发布平台安全区见 `references/platform-safe-areas.md`。
-- 屏幕字幕保持单行；超宽 cue 按语义和词级时间拆分，并检查实际字号下的排版。短视频开头一分钟按内容安排足够但克制的字幕内强调。细则见 `references/subtitle-handoff.md`。
+- 屏幕字幕保持单行；超宽 cue 按语义和词级时间拆分，并检查实际字号下的排版。前 30 秒是黄金时间，按 `brand-and-opening.md` 的密度要求安排字幕内强调、音效和第一次画面变化。细则见 `references/subtitle-handoff.md`。
 - 图表不加“蓝色表示当前重点”这类装饰色说明；只有真实数据分类需要解释时才放语义图例。
 - 图表创作先判断信息关系，再选择图形类型；按账号使用独立视觉规范，规则见 `references/conceptual-broll.md`，品牌色见 `references/brand-and-opening.md`。
 
@@ -57,7 +57,7 @@ MAXs 包装源视频时抽 3–5 帧定位福利卡文字，再按本条素材�
 
 b-roll 默认作为无声、可编辑的 graphics 子组合加入主剪辑项目，另占 Studio 轨道；保留 A-roll 原声和字幕。只有用户明确要独立交付时，才另建 b-roll 项目。
 
-图解段要让 A-roll 与随身标题贴片一起缩放移入 PIP，并在结束时移回全屏；上方图解 + 底部 A-roll 也使用同一套双向关键帧。图解节点按字幕 cue 分阶段出现。切片音效从 `media-use` 候选中少量选择并跨 cue 复用，记录到素材 manifest；不为每句口播加声效。操作细则见 `references/hyperframes-talking-head.md` 和 `references/conceptual-broll.md`。
+图解段要让 A-roll 与随身标题贴片一起缩放移入右下角 PIP，并在结束时移回全屏；上方图解 + 底部 A-roll 也使用同一套双向关键帧。字幕样式、PIP 坐标、音效和落版按 `brand-and-opening.md` 的「直播切片 / 口播成片基线」写死，不逐条试参数。切片音效按 `brand-and-opening.md` 的「音效调色板」从技能 `assets/audio/sfx/` 选 4 种以上，同一条视频内复用，音量 0.30–0.34 压在人声之下；不为每句口播加声效。操作细则见 `references/hyperframes-talking-head.md` 和 `references/conceptual-broll.md`。
 
 ## 六个阶段
 
@@ -65,7 +65,7 @@ b-roll 默认作为无声、可编辑的 graphics 子组合加入主剪辑项目
 2. **保守精剪。** 提出删除范围与原因，保护教学操作、句内含义和必要停顿。将确认后的保留段写入 `edit-plan.json`，生成粗剪供审核。VAD/静音检测只能给候选，不能直接决定删除。🔴 **STOP：**用户确认粗剪方案前不落实剪切；用户已提供人工精剪版或明确授权直接执行时，不重复询问。
 3. **字幕对时。** 使用同一剪辑清单生成视频片段位置和成片字幕，按 `references/workflow.md` 调用 `scripts/retime.py`。跨剪切点的字幕先按可靠词级时间和实际保留语音处理；脚本拒绝把整句文字硬塞进残余时间。按字幕技能管线完成增强和 diff 审核，同一份文字只增强一次。生成 Studio 字幕轨和外部 SRT 时，二者都从同一份最终简体 SRT 生成。
 4. **内容扫描与动画 b-roll 提案。** 字幕定稿后必须执行一次内容扫描，即使本轮重点是剪辑或字幕也不能略过。按 `references/conceptual-broll.md` 找出画面本身无法讲清、适合用动画解释的关系或过程，并给出字幕编号、源时间、一句话主张、视觉关系和预计时长。🔴 **STOP：**候选交用户确认后再制作；用户已明确指定图解内容和区间时直接执行，不重复确认。没有合适内容时明确记录“无候选”，不硬凑。
-5. **内容包装与动画 b-roll。** 按品牌规则处理片头；只有用户要求时才把源片片段剪成 Hook。术语 tips 和信息卡片绑定字幕来源与时间，不编造知识、数字或引用。用户已确认 b-roll 提案或已明确授权图解内容和字幕区间后，把概念关系做成动画子组合，放在主项目独立 graphics 轨道；按 `references/conceptual-broll.md` 和 `references/chart-style-sources.md` 的关系、账号风格、安全框和动效规则执行。图表特效先按包内规则选择；PixelFX 已安装时再查其 catalog，未安装时使用 HyperFrames 原生动效，不阻塞制作。只有候选能解释知识点且适配 HyperFrames 确定性时间线时才使用。保留 A-roll 原声和字幕时间；动画静音，不用无关素材填时长。所有新增文字只用 MiSans VF，并且中文只用简体。
+5. **内容包装与动画 b-roll。** 按品牌规则处理片头；只有用户要求时才把源片片段剪成 Hook。术语 tips 和信息卡片绑定字幕来源与时间，不编造知识、数字或引用。用户已确认 b-roll 提案或已明确授权图解内容和字幕区间后，把概念关系做成动画子组合，放在主项目独立 graphics 轨道；按 `references/conceptual-broll.md` 和 `references/chart-style-sources.md` 的关系、账号风格、安全框和动效规则执行。图表特效先按包内规则选择；PixelFX 已安装时再查其 catalog，未安装时使用 HyperFrames 原生动效，不阻塞制作。只有候选能解释知识点且适配 HyperFrames 确定性时间线时才使用。保留 A-roll 原声和字幕时间；动画静音，不用无关素材填时长。所有新增文字只用 MiSans VF，并且中文只用简体。MAXs 直播切片和口播默认在正片后接固定落版，落版时长计入根组合 `data-duration`。
 6. **预览交付。** 用 `check` 检查项目；检查开场、转场、剪切接缝、字幕、动画 b-roll、卡片和结尾。每次交付渲染前先打开 HyperFrames Studio 预览供用户编辑并检查。🔴 **STOP：**用户未明确要求渲染时，停在预览等待确认；用户已经要求渲染时，不等待额外的预览或字幕模式确认，检查通过后直接渲染。字幕默认烧录，用户明确要求无字幕时才切换。用 `ffprobe` 核对 MP4 时长/尺寸/音视频流，并抽查成片接缝、字幕和结尾；有差异就修复后重渲染。每个 MP4 都要在 `renders/` 生成同名 SRT 和 `_续编说明.txt`，说明如何归档完整项目、下次通过 agent 处理第三方反馈并重新打开 HyperFrames Studio，格式见 `references/workflow.md`。SRT 或说明文件生成失败时如实报告，不声称交付齐全。渲染完成并验证后，询问是否把动画图解直接导入当前 Premiere Pro 工程；用户确认后按 `references/premiere-import.md` 操作。输出可编辑项目、简体 SRT、MP4 和续编说明；b-roll 对应的字幕区间写入项目记录。
 
 ## 修改与恢复

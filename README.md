@@ -2,7 +2,7 @@
 
 把录屏、直播回放或口播原片做成可直接发布的 9:16 竖屏成片。粗剪、简体字幕、账号包装、图解和渲染由 agent 按流程推进，你只需要在每个检查点确认。
 
-适用两个账号：MAXs 讲游戏美术、技术美术、作品集、升学申请和校招求职；技研Labs 讲 Maya、Blender、3D、模拟与制作流程。
+目前适用两个账号：MAXs、技研Labs
 
 ## 快速开始
 
@@ -32,15 +32,11 @@ python3 "$SKILL_DIR/scripts/ensure_dependencies.py" --install-missing
 
 账号类型、这期讲什么、最想让人记住哪一句，可以在对话里说，也可以等 agent 问。
 
-## 起一条片子
+## 在 OpenCode 调用技能（优先使用 OpenCodeV2）
 
 opencode v1 输入 `/`，从列表里选 video-edit，再附上待剪辑视频的文件路径。v2 输入 `@` 选技能，同样附上路径。
 
-然后说清这次的意图，例如：
-
-> 做一条 MAXs 直播切片，围绕「校招比社招更适合应届生」整理成一条完整短片，先粗剪给我看方案，确认后再做字幕和包装，最后要 MP4 和 SRT。
-
-agent 按下面的顺序推进，每个该你决定的点会停下来：
+agent 按下面的顺序推进，每个该你决定的点会停下来询问：
 
 | 阶段 | 你要做的事 |
 | --- | --- |
@@ -50,7 +46,7 @@ agent 按下面的顺序推进，每个该你决定的点会停下来：
 | 预览 | 在 HyperFrames Studio 里过一遍，或直接说「渲染」 |
 | 交付 | 拿到成片、SRT 和续编说明 |
 
-没说渲染时，agent 停在预览等你；说了就直接渲染，不再追问字幕要不要烧。
+可以在跟 agent 说渲染，也可以在 HyperFrames Studio 手动点击 renders，推荐前者
 
 ## 交付内容
 
@@ -66,10 +62,8 @@ agent 按下面的顺序推进，每个该你决定的点会停下来：
 
 ## 改片
 
-工程一直是可编辑的，时间线、字幕、图解都能改，渲染不是终点。
-
 - 让 agent 改：把项目文件夹路径和要改的点告诉它。
-- 自己在 Studio 里改：在项目文件夹运行 `npx hyperframes preview --background`，打开命令给出的网址，改完保存。
+- 自己在 Studio 里改：终端定位到项目文件夹后运行 `npx hyperframes preview --background`，打开命令给出的网址，改完保存。
 - 刚在 HyperFrames 桌面版改过：先让 agent 运行 `npx hyperframes catch-up`，把应用里的编辑同步回文件，再动文件。
 
 收到第三方反馈时把原文贴进对话，别自己转述：
@@ -91,7 +85,7 @@ agent 只动相关位置，改完重新渲染会生成新版本，旧文件保�
 | `BRIEF.md`、`frame.md` | 本条的账号、意图与实际规范 |
 | `renders/` | 成片、SRT、续编说明 |
 
-备份或换电脑时复制整个文件夹，只拿 MP4 下次就改不了。
+交接项目或者备份、换电脑时复制整个文件夹，少一样可能会打不开。
 
 ## 账号规范
 
@@ -106,8 +100,6 @@ agent 只动相关位置，改完重新渲染会生成新版本，旧文件保�
 | ![MAXs 校招与社招候选池](skills/video-edit/examples/diagrams/maxs-recruitment-pools.png) | ![技研Labs 父子级变换](skills/video-edit/examples/diagrams/jiyan-parent-child.png) |
 | --- | --- |
 | MAXs 示例 | 技研Labs 示例 |
-
-SVG 原稿在 [`skills/video-edit/examples/diagrams/`](skills/video-edit/examples/diagrams/)，具体图按当条内容重画，不照搬示例里的数字。
 
 ## 常见问题
 
@@ -128,4 +120,4 @@ SVG 原稿在 [`skills/video-edit/examples/diagrams/`](skills/video-edit/example
 - [lieflat-charts](https://github.com/larashero3-dotcom/lieflat-charts)：技研Labs 图解的排版参考。
 - [pixelfx](https://github.com/patch-gg/pixelfx)：图解的可选素材与特效。
 - [Adobe_Premiere_Pro_MCP](https://github.com/hetpatel-11/Adobe_Premiere_Pro_MCP)：把图解导入 Premiere Pro。
-- MiSans VF 字体由小米提供，片头音效 Swoosh 由技研Labs 提供。
+- [MiSans VF](https://hyperos.mi.com/font/zh/) 字体由小米提供

@@ -20,17 +20,22 @@
 
 每个交付 MP4 `renders/<basename>.mp4` 都要有同名字幕 `renders/<basename>.srt`，以及 `renders/<basename>_续编说明.txt`。SRT 与 Studio 当前最终字幕一致；MP4 默认烧录字幕，用户明确要求无字幕时才在临时导出副本隐藏字幕轨。若任一目标名已存在，给三件输出统一换主名，从 `_v2` 开始递增，直到 MP4、SRT、说明文件三个路径都未占用；不覆盖旧件。
 
-续编说明应写明如何保存项目：归档或复制整个 HyperFrames 项目文件夹，不要只保留 MP4；保留源素材、`assets/`、`compositions/`、`index.html`、`meta.json`、`package.json` / lockfile、`BRIEF.md` / `frame.md`、`transcript/` 和 `renders/`。需要保留项目历史时连同隐藏的 `.hyperframes/` 一起备份。项目移动后以新目录为准，不要在说明里假定固定绝对路径。
+续编说明写给剪辑人员，不是写给开发：不列技术栈、命令清单和文件结构全表，只回答"东西在哪、以后怎么改"。控制在半屏以内，四段：
 
-说明中附上可复制的下次调用文本：
+1. 三件交付物各一行，说明工程在 `renders/` 的上一级文件夹，用相对位置描述，不写死绝对路径。
+2. 能改什么（剪辑、字幕、片头片尾、图解、时间线），改完重新导出是新文件，旧文件保留。
+3. 备份和换电脑：复制整个项目文件夹，不要只拿 MP4；换位置后照下面方法重新打开即可。
+4. 怎么继续：给一段可复制的 agent 调用文本，再给一条在项目目录启动 Studio 的命令 `npx hyperframes preview --background`，说明运行后打开命令输出的网址。项目刚在 HyperFrames desktop app 改过时，提示先运行 `npx hyperframes catch-up`，避免覆盖。
+
+调用文本：
 
 ```text
-使用 video-edit 继续编辑这个已有 HyperFrames 项目：<项目目录>
-第三方反馈：<粘贴反馈原文>
-先读取 BRIEF.md、项目历史和当前文件，保留已有 Studio 编辑，不要重新初始化或重建工程；只处理反馈涉及的内容。需要我确认时先停下。完成后检查并预览。
+使用 video-edit 继续编辑这个项目：<项目文件夹路径>
+要改的地方：<贴对方原话，或写清第几条字幕改成什么>
+保留现有剪辑和字幕，只改我提到的部分，需要我确认时先停下。
 ```
 
-若用户要进入 HyperFrames Studio，在项目目录运行 `npx hyperframes preview --background` 并用 `npx hyperframes preview --status` 确认服务后，打开命令返回的 Studio URL。若项目刚在 HyperFrames desktop app 中编辑过，先运行 `npx hyperframes catch-up`，再改文件。MP4 已生成但 SRT 或续编说明未写入时，保留成片并逐项报告缺少的交付件。
+MP4 已生成但 SRT 或续编说明未写入时，保留成片并逐项报告缺少的交付件。
 
 素材可能为 4K 录屏或可变帧率。保留源时间戳，以媒体实际时间选段；输出尺寸和帧率写入项目，不把帧数当毫秒。预览可用低分辨率代理，最终渲染使用原始素材。确定最终剪切点时对齐输出帧网格，字幕毫秒误差控制在一帧内。
 

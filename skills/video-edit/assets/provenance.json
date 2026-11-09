@@ -12,5 +12,12 @@
     "sha256": "4c956135e75f1ea089d2925b87a2a089ed91e4fdefa0f25e006deff16fe63c55",
     "bytes": 269856,
     "provided_by": "user"
+  },
+  {
+    "asset": "assets/audio/sfx/",
+    "source": "Pixabay 音效库（19 个 mp3 + manifest.json + CREDITS.md），经 media-use 随附素材取得；Pixabay License，商用免署名",
+    "files": 19,
+    "sha256_combined": "ec7ab5ed693f2a35931a22b538c4d5e40c772928ef72f2819fcf13725c9b5c35",
+    "provided_by": "bundled"
   }
 ]

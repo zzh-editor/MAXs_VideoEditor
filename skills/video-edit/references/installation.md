@@ -29,6 +29,6 @@ python3 "$SKILL_DIR/scripts/ensure_dependencies.py" --install-missing
 
 - `assets/fonts/MiSansVF.ttf` 和 `assets/audio/Swoosh_01.wav` 已包含在仓库，项目引用本地副本。
 - 渲染需要 Node.js 22+、FFmpeg 和 HyperFrames 支持的 Chrome Headless Shell。可运行 `npx hyperframes doctor --json` 检查；缺少浏览器时运行 `npx hyperframes browser ensure`。
-- `premiere-pro-mcp` skill 只用于 Premiere 导入步骤；Premiere Pro、MCP 服务和 Bridge 是可选项，不影响基本剪辑与 MP4 渲染。
+- Premiere Pro 导入不在依赖管线内，`--check` / `--install-missing` 都不处理 `premiere-pro-mcp`；Premiere Pro、MCP 服务和 Bridge 都是可选外接件，不影响基本剪辑与 MP4 渲染。
 - MAXs 官方落版素材不在仓库。需要落版时使用者需提供获准使用的素材；技能不引用个人电脑上的固定绝对路径。
 - `lieflat-charts` 上游采用 PolyForm Noncommercial。技能只引用其视觉原则，不复制或打包其代码、模板和素材；商业项目需遵守其许可证说明。

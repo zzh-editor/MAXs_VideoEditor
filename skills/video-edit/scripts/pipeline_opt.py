@@ -148,7 +148,7 @@ def main():
     val_parser.add_argument("svg", help="Input SVG file")
     val_parser.add_argument("--account", required=True, choices=["maxs", "jiyan", "leona"], help="Brand account")
     val_parser.add_argument("--output", "-o", help="Output JSON report file path")
-    val_parser.set_defaults(func=val_parser)
+    val_parser.set_defaults(func=validate_svg_cmd)
 
     render_parser = subparsers.add_parser("render-chart", help="Render declarative chart to SVG")
     render_parser.add_argument("config", help="Input declarative chart JSON config")

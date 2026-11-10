@@ -23,7 +23,7 @@
 
   <rect x="570" y="390" width="300" height="180" rx="8" fill="#ADF911"/>
   <text x="720" y="470" text-anchor="middle" fill="#161616" font-size="36px" font-weight="700" font-family="MiSans VF, PingFang SC, sans-serif">拓扑检查</text>
-  <text x="720" y="520" text-anchor="middle" fill="#161616" font-size="25px" font-family="MiSans VF, PingFang SC, sans-serif">变形前验证结构</text>
+  <text x="720" y="520" text-anchor="middle" fill="#161616" font-size="28px" font-family="MiSans VF, PingFang SC, sans-serif">变形前验证结构</text>
   <path d="M870 480 H970" fill="none" stroke="#ADF911" stroke-width="5" marker-end="url(#arrow)"/>
 
   <rect x="990" y="390" width="300" height="180" rx="8" fill="#222222" stroke="#5E5E5E" stroke-width="3"/>

@@ -18,18 +18,7 @@
     {
       "repository": "zzh-editor/Srt-Enhancer",
       "skills": ["srt-enhancer"]
-    },
-    {
-      "repository": "hetpatel-11/Adobe_Premiere_Pro_MCP",
-      "skills": ["premiere-pro-mcp"]
     }
   ],
-  "services": [
-    {
-      "id": "adobe-premiere-pro-mcp",
-      "required_for": "Premiere Pro post-render import",
-      "install": "npm install -g adobe-premiere-pro-mcp@latest && premiere-pro-mcp --install-cep",
-      "note": "Premiere Pro and its MCP Bridge must be running before editing tools are available."
-    }
-  ]
+  "services": []
 }

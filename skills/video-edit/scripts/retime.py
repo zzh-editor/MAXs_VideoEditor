@@ -1,4 +1,4 @@
-"""Map complete SRT cue"""Map complete SRT cues, kept ranges, and an optional duplicated opening hook."""
+"""Map complete SRT cues, kept ranges, and an optional duplicated opening hook."""
 
 import argparse
 import json
@@ -47,25 +47,55 @@ def integer_ms(value, name):
 
 
 def parse_words(words_input):
+    """Flatten word sidecars into [{word, start_ms, end_ms}, ...].
+
+    兼容两种结构：
+    - 扁平词表：[{"word": "跨", "start_ms": 1000, "end_ms": 1500}, ...]
+    - video-transcribe 的 words.json：[{"text": ..., "words": [{"word": ..., "start": 1.18, "end": 1.52}]}, ...]
+      段级条目里的秒制时间戳会展开成词级毫秒时间戳。
+    """
     if not words_input:
         return []
-    if isinstance(words_input, dict) and "words" in words_input:
-        words_input = words_input["words"]
+    if isinstance(words_input, dict):
+        words_input = words_input.get("words") or words_input.get("segments") or []
     if not isinstance(words_input, list):
         return []
+
+    flat = []
+    for item in words_input:
+        if not isinstance(item, dict):
+            continue
+        nested = item.get("words")
+        if isinstance(nested, list):
+            flat.extend(nested)
+        else:
+            flat.append(item)
+
     res = []
-    for w in words_input:
+    for w in flat:
         if not isinstance(w, dict):
             continue
-        start = w.get("start_ms", w.get("start", None))
-        end = w.get("end_ms", w.get("end", None))
         text = w.get("word", w.get("text", ""))
-        if start is not None and end is not None:
-            w_copy = dict(w)
-            w_copy["start_ms"] = int(start)
-            w_copy["end_ms"] = int(end)
-            w_copy["word"] = text
-            res.append(w_copy)
+        if "start_ms" in w or "end_ms" in w:
+            start = w.get("start_ms")
+            end = w.get("end_ms")
+        else:
+            # video-transcribe / Whisper 用秒；other 工具可能用 start/end 但已是毫秒
+            start = w.get("start")
+            end = w.get("end")
+            if isinstance(start, (int, float)) and isinstance(end, (int, float)):
+                scale = w.get("time_unit") or w.get("unit")
+                if scale != "ms":
+                    start, end = start * 1000, end * 1000
+        if not isinstance(start, (int, float)) or not isinstance(end, (int, float)):
+            continue
+        if not text:
+            continue
+        w_copy = dict(w)
+        w_copy["start_ms"] = int(round(start))
+        w_copy["end_ms"] = int(round(end))
+        w_copy["word"] = text
+        res.append(w_copy)
     return res
 
 
@@ -183,7 +213,7 @@ def retime(plan, cues, words=None, allow_boundary_clip=False):
         output_cues.append(f"{len(output_cues) + 1}\n{timestamp(start)} --> {timestamp(end)}\n{text}")
         previous_end = end
 
-    manifest = {"clips": clips, "total_duration_ms": cursor}
+    manifest = {"duration_ms": cursor, "clips": clips}
     retimed_srt = ("\n\n".join(output_cues) + "\n") if output_cues else ""
     return manifest, retimed_srt, retimed_words
 
@@ -204,16 +234,24 @@ def main():
     if args.words:
         words = json.loads(args.words.read_text(encoding="utf-8"))
 
-    manifest, retimed_srt, retimed_words = retime(plan, cues, words=words, allow_boundary_clip=args.allow_boundary_clip)
-
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-    (args.output_dir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    (args.output_dir / "retimed.srt").write_text(retimed_srt, encoding="utf-8")
-
-    if args.words:
-        (args.output_dir / "retimed_words.json").write_text(json.dumps(retimed_words, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    try:
+        timeline, retimed_srt, retimed_words = retime(
+            plan, cues, words=words, allow_boundary_clip=args.allow_boundary_clip)
+        if not retimed_srt:
+            raise ValueError("所有字幕均落在删除范围内；请核对清单与字幕时间原点")
+        args.output_dir.mkdir(parents=True, exist_ok=False)
+        (args.output_dir / "timeline.json").write_text(
+            json.dumps(timeline, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        (args.output_dir / "captions.srt").write_text(retimed_srt, encoding="utf-8")
+        if args.words:
+            (args.output_dir / "retimed_words.json").write_text(
+                json.dumps(retimed_words, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8")
+    except (OSError, ValueError) as error:
+        parser.exit(1, f"retime: {error}\n")
+    print(f"{args.output_dir}: {len(timeline['clips'])} 段，{timeline['duration_ms']} ms")
 
 
 if __name__ == "__main__":
     main()
-s, kep
+

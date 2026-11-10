@@ -54,13 +54,12 @@ MAXs 包装源视频时抽 3–5 帧定位福利卡文字，再按本条素材�
 | 本地素材登记、后续包装规范 | `media-use`、`hyperframes` |
 | 图表风格与动效特效 | 包内 `references/chart-style-sources.md` 和 `examples/diagrams/*.svg` 是权威来源；`diagram-design`、`lieflat-charts`、`pixelfx` 仅作可选补充 |
 | talking-head 结构与 HyperFrames 时间线规范 | `references/hyperframes-talking-head.md` |
-| 渲染后导入 Premiere Pro | `premiere-pro-mcp`、`references/premiere-import.md` |
 
 每条视频独立项目。HyperFrames 工程默认放在输入视频所在目录下的 `<视频文件名>-hyperframes/`；已有工程或用户指定路径优先。用 `init` 时关闭自动转写，避免重复识别。检查是否已有人工剪辑；未剪过时先按字幕和语义提出保守剪辑候选。导入后完成一次性问卷后再进入下游步骤，随后将答案写入 `BRIEF.md`；不要把已退役的 `general-video` 写成上游 workflow。执行细则见 `references/workflow.md` 和 `references/preflight.md`；安装状态见 `references/installation.md`。
 
 已有工程需要核对时间线时，按需运行 `npx hyperframes timeline --json`，仅在命令侧筛选目标时间段和相关 clip 的 `id`、`absStart`、`absEnd`、`file`、`trackKind`；不要把完整 JSON 输出送进上下文。若用户已给出确切 clip ID 与时间段，不重复索引无关轨道。
 
-分发包的技能依赖列在 `references/dependencies.json`，图表上游版本列在 `references/style-upstreams.json`。开始工作前运行 `python3 scripts/ensure_dependencies.py --check`；若缺少当前分支所需的 skill，运行 `--install-missing` 后再继续。安装失败时指出缺失项，不假装已调用该 skill。Premiere Pro 服务本身不是 Agent Skill；只在用户选择导入时按 `references/premiere-import.md` 检查并连接。
+分发包的技能依赖列在 `references/dependencies.json`，图表上游版本列在 `references/style-upstreams.json`。开始工作前运行 `python3 scripts/ensure_dependencies.py --check`；若缺少当前分支所需的 skill，运行 `--install-missing` 后再继续。安装失败时指出缺失项，不假装已调用该 skill。Premiere Pro 导入不在依赖管线内：`--check` 和 `--install-missing` 都不处理它；只有用户明确要求导入且本机已有 MCP 时，才按 `references/premiere-import.md` 手动执行。
 
 开始图表或图表特效设计前，按账号读取 `references/chart-style-sources.md`；字幕或构图需避让平台 UI 时读取 `references/platform-safe-areas.md`；talking-head 剪辑读取 `references/hyperframes-talking-head.md`。图表上游日期见 `references/style-upstreams.json`。用户要求更新，或距上次成功检查满 7 天时，先检查并融合相关上游的样式和动效；检查在下一次相关 `video-edit` 调用时执行，不是后台定时任务。
 
@@ -99,4 +98,4 @@ b-roll 默认作为无声、可编辑的 graphics 子组合加入主剪辑项目
 
 - **References 按需懒加载**：根据 `BRIEF.md` 的账号与导出模式按需读取 `references/`，不导出 Premiere 时不加载 `references/premiere-import.md`。
 - **词级重映射与候选窗口聚合**：使用 `python3 scripts/retime.py edit-plan.json source.srt --words words.json --allow-boundary-clip --output-dir dist/` 消除切口报错，并使用 `python3 scripts/pipeline_opt.py extract-cues` 生成 15–25 秒高密度候选窗口，免除全量 SRT 上下文读取。
-- **声明式图表与 4px 安全区校验**：使用 `python3 scripts/pipeline_opt.py render-chart` 结合账号配色 Token 与词级 `step_triggers` 生成动效图表，渲染后调用 `python3 scripts/pipeline_opt.py validate-svg` 强制验证 4px 网格与 9:16 Diagram Safe Box（`x: 108..950, y: 154..1133`）。
+- **声明式图表与合规校验**：使用 `python3 scripts/pipeline_opt.py render-chart` 结合账号配色 Token 与词级 `step_triggers` 生成动效图表；渲染后调用 `python3 scripts/pipeline_opt.py validate-svg` 检查 viewBox、品牌主色和最小字号（正文 ≥28px）。4px 网格与 9:16 Diagram Safe Box（`x: 108..950, y: 154..1133`，渲染器已按此画框）目前靠 `snapshot` 抽帧目检，脚本不做几何校验。

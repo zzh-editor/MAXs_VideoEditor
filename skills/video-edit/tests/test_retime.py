@@ -23,7 +23,7 @@ class RetimeTests(unittest.TestCase):
             "\ufeff1\r\n00:00:10,000 --> 00:00:18,000\r\n完整第一句\r\n\r\n"
             "2\r\n00:00:19,000 --> 00:00:20,000\r\n删除的声音\r\n\r\n"
             "3\r\n00:00:23,000 --> 00:00:24,000\r\nPython < 3\r\n第二行\r\n")
-        timeline, srt = MODULE.retime(self.plan(), cues)
+        timeline, srt, _ = MODULE.retime(self.plan(), cues)
         self.assertEqual(timeline["duration_ms"], 19800)
         self.assertEqual(timeline["clips"][1]["start_ms"], 10800)
         self.assertEqual(timeline["clips"][1]["media_start_ms"], 21000)
@@ -38,7 +38,7 @@ class RetimeTests(unittest.TestCase):
         plan = {"source_duration_ms": 8000, "intro_ms": 0,
                 "keep": [{"in_ms": 0, "out_ms": 3800},
                          {"in_ms": 5000, "out_ms": 8000}]}
-        timeline, srt = MODULE.retime(plan, [("1", 0, 2000, "开头语音仍同步")])
+        timeline, srt, _ = MODULE.retime(plan, [("1", 0, 2000, "开头语音仍同步")])
         self.assertEqual(timeline["duration_ms"], 6800)
         self.assertEqual(timeline["clips"][0]["start_ms"], 0)
         self.assertEqual(MODULE.parse_srt(srt)[0][1], 0)
@@ -53,7 +53,7 @@ class RetimeTests(unittest.TestCase):
                 ("3", 11000, 12000, "hook line two"),
                 ("4", 13000, 14000, "body later")]
 
-        timeline, srt = MODULE.retime(plan, cues)
+        timeline, srt, _ = MODULE.retime(plan, cues)
 
         self.assertEqual(timeline["duration_ms"], 32000)
         self.assertEqual(timeline["clips"], [
@@ -76,6 +76,42 @@ class RetimeTests(unittest.TestCase):
             MODULE.retime(plan, [("1", 11000, 12500, "跨越 Hook 边界")])
         with self.assertRaisesRegex(ValueError, "intro_ms"):
             MODULE.retime({**plan, "intro_ms": 1999}, [])
+
+    def test_words_drive_boundary_clip_and_retimed_words(self):
+        plan = {"source_duration_ms": 4000, "intro_ms": 0,
+                "keep": [{"in_ms": 0, "out_ms": 1500},
+                         {"in_ms": 2500, "out_ms": 4000}]}
+        cues = [("1", 1000, 3000, "跨越剪切点")]
+        words = [{"word": "跨", "start_ms": 1000, "end_ms": 1500},
+                 {"word": "越", "start_ms": 1500, "end_ms": 2500},
+                 {"word": "剪", "start_ms": 2500, "end_ms": 3000}]
+        timeline, srt, retimed_words = MODULE.retime(
+            plan, cues, words=words, allow_boundary_clip=True)
+        self.assertEqual(timeline["duration_ms"], 3000)
+        self.assertEqual([(start, end, text) for _, start, end, text in MODULE.parse_srt(srt)],
+                         [(1000, 1500, "跨"), (1500, 2000, "剪")])
+        self.assertEqual([(w["start_ms"], w["end_ms"], w["word"]) for w in retimed_words],
+                         [(1000, 1500, "跨"), (1500, 2000, "剪")])
+
+    def test_video_transcribe_segment_sidecar_is_flattened_to_ms(self):
+        sidecar = [
+            {"start": 0.0, "end": 2.78, "text": "大家好,今天",
+             "words": [{"word": "大家好,", "start": 0.0, "end": 1.18},
+                       {"word": "今天", "start": 1.18, "end": 1.52}]},
+            {"start": 2.78, "end": 4.0, "text": "我们来聊",
+             "words": [{"word": "我们", "start": 2.78, "end": 3.2},
+                       {"word": "来聊", "start": 3.2, "end": 4.0}]},
+        ]
+        self.assertEqual(
+            [(w["word"], w["start_ms"], w["end_ms"]) for w in MODULE.parse_words(sidecar)],
+            [("大家好,", 0, 1180), ("今天", 1180, 1520),
+             ("我们", 2780, 3200), ("来聊", 3200, 4000)])
+
+    def test_words_dict_with_segments_key_is_accepted(self):
+        sidecar = {"segments": [{"words": [{"word": "嗯", "start": 0.25, "end": 0.5}]}]}
+        self.assertEqual([(w["word"], w["start_ms"], w["end_ms"]) for w in MODULE.parse_words(sidecar)],
+                         [("嗯", 250, 500)])
+        self.assertEqual(MODULE.parse_words([{"word": "", "start": 1, "end": 2}]), [])
 
     def test_invalid_ranges_are_rejected(self):
         for ranges in [[], [{"in_ms": 2, "out_ms": 2}],

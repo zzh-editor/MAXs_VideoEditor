@@ -94,3 +94,9 @@ b-roll 默认作为无声、可编辑的 graphics 子组合加入主剪辑项目
 - 不覆盖源视频、原始 SRT、已有 Studio 编辑或同名渲染文件；输出使用新路径。
 - 不在粗剪、图解或画幅适配等确认点未通过时继续有副作用的修改；用户已明确授权的步骤不重复询问。
 - 不拉伸或擅自裁切品牌落版来凑画幅，也不制作未经确认且用户未明确要求的图解。
+
+## 管线效率、图表一致性与 Token 优化规则（Fast-Path）
+
+- **References 按需懒加载**：根据 `BRIEF.md` 的账号与导出模式按需读取 `references/`，不导出 Premiere 时不加载 `references/premiere-import.md`。
+- **词级重映射与候选窗口聚合**：使用 `python3 scripts/retime.py edit-plan.json source.srt --words words.json --allow-boundary-clip --output-dir dist/` 消除切口报错，并使用 `python3 scripts/pipeline_opt.py extract-cues` 生成 15–25 秒高密度候选窗口，免除全量 SRT 上下文读取。
+- **声明式图表与 4px 安全区校验**：使用 `python3 scripts/pipeline_opt.py render-chart` 结合账号配色 Token 与词级 `step_triggers` 生成动效图表，渲染后调用 `python3 scripts/pipeline_opt.py validate-svg` 强制验证 4px 网格与 9:16 Diagram Safe Box（`x: 108..950, y: 154..1133`）。

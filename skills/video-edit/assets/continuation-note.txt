@@ -1,0 +1,9 @@
+视频交付说明
+
+交付物是 MP4 成片和同名简体中文字幕 SRT。
+
+HyperFrames 可编辑工程默认保存在导入视频所在目录；本次若指定了其他工程目录，以指定位置为准。备份时复制整个工程文件夹。
+
+本地修改：进入工程文件夹，运行 `npx hyperframes preview --background`，再打开命令输出的网址，在 HyperFrames Studio 中检查和编辑。
+
+通过 agent 修改：把工程文件夹路径和要改的内容交给 video-edit，并说明要保留哪些现有内容。

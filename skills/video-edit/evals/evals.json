@@ -4,7 +4,7 @@
     {
       "id": 1,
       "prompt": "用 video-edit 精剪我已选好的录屏 <source.mp4>，加字幕和知识点 tips。",
-      "expected_output": "首次只询问 MAXs 或技研账号，收到回答后才询问视频类型；不能先转写或猜测账号。",
+      "expected_output": "先导入并检查素材，然后用一次批量问题收集所有未决的账号、类型、字幕和图解授权；不按轮次分开发问。将答案写进 BRIEF.md，在后续检查点对应一致时记为预批准通过，不重复提问。",
       "files": []
     },
     {
@@ -148,25 +148,109 @@
     {
       "id": 25,
       "prompt": "MAXs 直播切片前一分钟想加几次推近拉回，别抠像也别裁脸。",
-      "expected_output": "只有用户明确要求时才按口播强主张加少量 A-roll 推拉，保持中心 framing，快照检查最大 scale 下完整人脸和头顶；不加人物抠像或字幕外花字。",
+      "expected_output": "只有用户明确要求时才按口播强主张加少量 A-roll 推拉，保持中心 framing，不加人物抠像或字幕外花字。运行结构检查，再抽查首帧、推拉入场/中段/退场并阅读图像；随后打开 HyperFrames Studio，由用户做最终验收。",
       "files": []
     },
     {
       "id": 26,
       "prompt": "字幕已经校对，HyperFrames 项目也通过检查。请直接渲染成片。",
-      "expected_output": "不再询问字幕模式，默认烧录可见字幕轨；把同一份最终简体 SRT 复制到 renders/ 并与 MP4 同名；额外生成续编说明，指导用户归档整个工程及下次通过 video-edit 和 HyperFrames Studio 继续编辑。",
+      "expected_output": "不再询问字幕模式，默认烧录可见字幕轨；渲染前运行结构检查，并抽查首帧和改动时段的关键状态、阅读帧图；然后打开 HyperFrames Studio。把同一份最终简体 SRT 复制到 renders/ 并与 MP4 同名，再原样复制固定续编说明模板。",
       "files": []
     },
     {
       "id": 27,
       "prompt": "我只安装了 video-edit，没有安装 diagram-design、lieflat-charts 或 pixelfx。请给 MAXs 做一张校招/社招对比图，确认他人也能按技能包里的来源画出同样的品牌风格。",
-      "expected_output": "直接使用随技能包安装的 chart-style-sources.md、brand-and-opening.md 和 MAXs SVG/PNG 示例作为权威风格来源；按当前字幕内容重画，不要求安装可选图库、不照抄示例文案或数据，并在渲染预览中检查颜色、安全框和版式。",
+      "expected_output": "直接使用随技能包安装的 chart-style-sources.md、brand-and-opening.md 和 MAXs SVG/PNG 示例作为权威风格来源；按当前字幕内容重画，不要求安装可选图库、不照抄示例文案或数据。让主图形有效覆盖安全框，字号满足小屏阅读层级；运行结构检查，抽查首帧和图解关键时刻并阅读帧图；再打开 HyperFrames Studio，由用户检查颜色、安全框和版式。",
       "files": []
     },
     {
       "id": 28,
       "prompt": "把更新版渲染到 renders/clip.mp4；renders/clip.srt 和 renders/clip_续编说明.txt 已经存在，旧版要留着。",
       "expected_output": "不覆盖任何旧文件；从 _v2 开始递增检查，直到 MP4、同名 SRT 和续编说明三条路径都空闲，再统一使用同一新主名。",
+      "files": []
+    },
+    {
+      "id": 29,
+      "prompt": "新视频在 Downloads 里，没有工程文件。导入后一次问完 MAXs/技研账号、课程/直播/口播类型、字幕处理中英空格和括注、图解处理方式；之后不要在流程里重复问。",
+      "expected_output": "新工程默认建在导入视频目录下的独立 HyperFrames 子目录。导入并检查素材后，一次提交所有未决选择；执行时把答案写进 BRIEF.md，并在粗剪、字幕、图解和交付检查点复用已明确的回答。",
+      "files": []
+    },
+    {
+      "id": 30,
+      "prompt": "字幕、PIP 和图解改好后自动打开 HyperFrames Studio，我会在那里做最终验收。",
+      "expected_output": "运行 npx hyperframes check --json；再用 snapshot 抽查首帧和改动片段的入场、中段、退场并阅读输出帧；最后启动 npx hyperframes preview --background 并返回 Studio URL，说明用户仍需在 Studio 做最终验收。",
+      "files": []
+    },
+    {
+      "id": 31,
+      "prompt": "字幕润色只接受不改语义的校正，混排空格开启、术语括注关闭；图解候选只要字幕能支撑就自动制作。",
+      "expected_output": "把这些答案作为导入问卷的预批准，传给 video-transcribe/srt-enhancer；仍完成原有对时、增强、diff、内容扫描和图解步骤。已明确批准的检查点不再提问；若发现会改语义或字幕无法支持的图解，只询问新增的差异项。",
+      "files": []
+    },
+    {
+      "id": 32,
+      "prompt": "HyperFrames 预览第一帧是黑的，但源视频开头有画面。修好后别渲染，给我 Studio 检查。",
+      "expected_output": "先对照源视频和 HyperFrames 的 0 秒、首个可解码时刻及后续帧，定位黑帧是在源素材还是初始解码；只在 HyperFrames 首帧解码延迟时，用源帧作为短暂占位并保留完整原视频。运行 check，再抽帧确认 0 秒和首个实际视频帧均非黑，随后打开 HyperFrames Studio；不渲染。",
+      "files": []
+    },
+    {
+      "id": 33,
+      "prompt": "MAXs 竖屏图解的节点都挤在左边，右侧空了一大块。按字幕已讲的内容重排，并让连线、节点跟着口播逐步出现。",
+      "expected_output": "先按 MAXs 安全框检查内容边界；用现有字幕重排节点或改为多列，放大阅读文字但不新增事实、不添空卡片。按 cue 先连线、再节点和标签，进度端点与节点中心精确对齐；入退场使用 0.45–0.7 秒平滑缓动，阶段留足阅读停顿。运行 check、抽首帧/中段/退场并读图，再交给用户在 HyperFrames Studio 最终验收。",
+      "files": []
+    },
+    {
+      "id": 34,
+      "prompt": "字幕只支持两个关系节点。把 MAXs 图解铺满安全区，空的地方想办法塞些视觉元素。",
+      "expected_output": "不为了占满区域添加字幕不支持的节点、装饰元素或空心卡片。把两个真实节点放大并居中，保持连线关系清楚；如果剩余空白仍多，缩小整组内容并报告字幕材料不足以支持更多信息。",
+      "files": []
+    },
+    {
+      "id": 35,
+      "prompt": "开头 30 秒的大字报太空也没说出重点。前一分钟没有图表，后面十分钟可以按内容多做几段；有关系适合画图时要优先画图。",
+      "expected_output": "检查相邻字幕，按内容挑大字报段落；每张卡把多个有直接依据的信息组织成结论、依据或步骤，不直接放大单条字幕、不新增事实。能清楚表达比较、流程、因果或层级时优先图表；安全框内排满真实信息，不用空框填版。",
+      "files": []
+    },
+    {
+      "id": 36,
+      "prompt": "校招和社招的比较图逐条显示时，上一条结果会消失，我看完容易忘。重新设计成看一遍就能比较的图。",
+      "expected_output": "对比项按字幕 cue 逐项揭示，但已出现的结果持续可见；只强调当前项，不移除上一项。结束时保留完整两组对照，不新增字幕没有的数据或结论。",
+      "files": []
+    },
+    {
+      "id": 37,
+      "prompt": "这条 MAXs 直播口播的图表和大字报让说话人几乎全程缩在右下角。保留有解释作用的图解，按口播节奏恢复一些全屏 A-roll；不要再补一张卡片。",
+      "expected_output": "统计 A-roll 总时长、PIP 覆盖率和最长连续 PIP 区间；超过 70% 或 30 秒时复查。把互不连续的图解分段，利用自然停顿、情绪落点或转题恢复全屏 A-roll；不改原声和字幕，不新增卡片，不把阈值当自动删图上限。修改后运行 check 和针对性预渲染 snapshot。",
+      "files": []
+    },
+    {
+      "id": 38,
+      "prompt": "给 MAXs 的竖屏图解做分步动效，节点按口播顺序出现，并保留已讲过的结果。",
+      "expected_output": "读取本技能的 talking-head 与 chart-style 动效规则，并遵循 HyperFrames seek-safe 时间线契约；按 cue 选择少量有意义的连线/节点揭示，使用单个 paused 时间线，不加计时器、未设种子随机或装饰性循环。入退场和 hold 符合本技能参考规则，并在渲染前用 snapshot 检查关键状态。",
+      "files": []
+    },
+    {
+      "id": 39,
+      "prompt": "视频已通过渲染。以后成功后不要再抽帧检查；渲染前的检查和抽帧仍照常做。",
+      "expected_output": "将视觉 check 和 snapshot 放在渲染前。渲染成功后只运行 ffprobe 检查文件、画幅、时长、帧率和音视频流，并核对 SRT 与续编说明；不调用 snapshot --against、ffmpeg 抽帧或其他成片帧视觉检查。",
+      "files": []
+    },
+    {
+      "id": 40,
+      "prompt": "这个 HyperFrames 工程的 timeline --json 输出太长。只核对 20 到 40 秒的图解布局，顺便确认对应素材文件。",
+      "expected_output": "用 timeline --json 后在命令侧筛选目标时间窗和相关 clip，只保留 id、absStart、absEnd、file、trackKind 等必要字段；不把完整 JSON 原样贴进上下文，也不重查无关时间段。",
+      "files": []
+    },
+    {
+      "id": 41,
+      "prompt": "字幕已定稿，接下来要排校招图、两段 PIP 和对应音效。请先建 cue 对照，再按它做后续工作。",
+      "expected_output": "只生成一份分组精简的 transcript/cue-map.md，按相邻 cue 归组，记录 cue 编号、成片时间、简短主张/关系、图解或 PIP 状态及目标组合。后续图表、字幕位置、音效和预渲染抽帧复用该表；不复制整份逐字稿，也不重复读取全量 SRT。字幕或剪辑时段变化时只更新受影响行。",
+      "files": []
+    },
+    {
+      "id": 42,
+      "prompt": "图表组合还要调整几轮。别每改一个 HTML 元素就跑一次完整浏览器检查，但渲染前要有完整把关。",
+      "expected_output": "迭代中用 lint 快速反馈；完成一批改动后运行一次 check 和针对性预渲染 snapshot。若完整检查后又修改 HTML，再运行完整 check；不能在最终交付前跳过完整检查或视觉快照。",
       "files": []
     }
   ]

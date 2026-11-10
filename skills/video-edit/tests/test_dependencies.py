@@ -30,6 +30,12 @@ class DependencyTests(unittest.TestCase):
         self.assertTrue((SKILL_DIR / "assets/audio/Swoosh_01.wav").is_file())
         self.assertTrue((SKILL_DIR / "assets/jiyan-opener.html").is_file())
 
+    def test_fixed_continuation_note_template_is_bundled(self):
+        note = (SKILL_DIR / "assets/continuation-note.txt").read_text(encoding="utf-8")
+        self.assertIn("MP4 成片", note)
+        self.assertIn("同名简体中文字幕 SRT", note)
+        self.assertIn("npx hyperframes preview --background", note)
+
     def test_authoritative_chart_sources_and_previews_are_bundled(self):
         self.assertTrue((SKILL_DIR / "references/chart-style-sources.md").is_file())
         examples = ["maxs-recruitment-pools", "maxs-study-timeline",

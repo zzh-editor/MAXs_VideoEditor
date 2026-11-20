@@ -1,5 +1,13 @@
 # 更新记录
 
+## 1.2.0
+
+- SKILL.md 重构为六节结构：When to Use / Outcome / Fixed Workflow（七步含 🔴 STOP）/ Non-Negotiable Constraints / Completion Criteria（含 NO/OK 示例）/ On-demand References；正文不再重复 references 已有细则，96 行压至约 70 行，内容无删减。
+- 新增图表占位文字禁令：图表内禁止「口播示例」等非内容文字，所有节点、标签、标题必须由字幕支持。
+- 图表风格自包含：diagram-design 51 种类型全量内嵌本地目录（补 SBGN、Requirement traceability、Event modeling、Steps、Unit Grid、Schedule network 六种），运行时不依赖外部 skill；上游同步加类型完整性核对，新增类型自动跟进；风格照搬上游、配色严守账号品牌定义。技研Labs 明确引用 larashero3-dotcom/lieflat-charts 与 patch-gg/pixelfx。
+- 多段观点图表呆滞防护：相邻动画段间停留将超 5 秒时，先恢复全覆盖 A-roll，满 5 秒再进入下一段图表 + PIP，类推到底。
+- `npx hyperframes init` 关闭自动转写、时间线 `--json` 命令侧筛选两处细节移入 `references/workflow.md`。
+
 ## 1.1.9
 
 - HTML 迭代改用 `lint` 快速反馈；批次结束及最终交付前运行完整 `check`，之后再改则重跑。

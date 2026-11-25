@@ -1,0 +1,42 @@
+[
+ {
+  "query": "这条直播切片帮我剪一下，去掉口癖，加简体字幕，最后出 MP4",
+  "should_trigger": true
+ },
+ {
+  "query": "MAXs 这条口播要加两张知识点图解，图表文案你来写",
+  "should_trigger": true
+ },
+ {
+  "query": "素材是 9:16 竖屏录屏加转写 SRT，做成成片，先给我切点方案",
+  "should_trigger": true
+ },
+ {
+  "query": "技研Labs 课程切片，保留片头，字幕重对时，烧录后导出",
+  "should_trigger": true
+ },
+ {
+  "query": "我这条视频已经剪好了，帮我加个提问卡开头和品牌落版",
+  "should_trigger": true
+ },
+ {
+  "query": "把这个 YouTube 视频下载下来",
+  "should_trigger": false
+ },
+ {
+  "query": "这段音频帮我转成 SRT",
+  "should_trigger": false
+ },
+ {
+  "query": "把这份 SRT 的口癖去掉，断成 9:16 短行",
+  "should_trigger": false
+ },
+ {
+  "query": "用 HyperFrames 从零写一个产品宣传动画，不需要真人素材",
+  "should_trigger": false
+ },
+ {
+  "query": "帮我修一下 hyperframes 项目的 build 报错",
+  "should_trigger": false
+ }
+]

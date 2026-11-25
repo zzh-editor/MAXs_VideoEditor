@@ -1,5 +1,31 @@
 # 更新记录
 
+## 1.3.2
+
+- description 补使用场景与触发词（课程/直播/口播素材、录屏、直播录像、原始录制、现成工程、精剪、去口癖、字幕对时与校对、品牌包装、知识点图解、提问卡、烧录字幕）。触发测试 10 条前后都是 5/5 命中、0 误触，路由无变化，改的是 E0 体检里「没写何时用」的表述缺口。
+
+## 1.3.1
+
+- 第 4 步补词级数据来源：跨剪切点字幕复用 `video-transcribe` 的引擎和环境，不另建转写环境；引擎不可用或没有词级数据时保留整句或列入待确认，禁止改时间戳把条目塞进保留区间。起因是实测中 agent 手改 43.080→43.100 绕开 `retime.py` 的报错。
+- On-demand References 表补点 `references/dependencies.json` 与 `references/style-upstreams.json`，两个文件此前从不被 SKILL.md 指向。
+- 第 3 步把「保守精剪」定义成具体对象：口吃、自纠改口、说完又否定的重复话默认列入删除，只有伤论点、教学操作或指代时才保留并说明原因。起因是三次实测都只删 1 处、把明显废话留给用户二次确认。
+
+## 1.3.0
+
+- 新增 `references/copy-writing.md`：图表文案七条（标题写所得、每图一个受众标签、品牌主张显式化、两档字数、一图一结论、数字走口径表、内部语汇翻译）与交付前四问；主标题 ≤7 字与「学习的目的：升学与求职」类标签的冲突按两档解决。
+- 新增提问卡两段式：触发条件（标题是问句或前 15 秒抛问句、30 秒内给判断）；A 段约 0–3 秒纯文字全屏（`x=10%–88%`、`y=8%–64%`），B 段 A-roll 滑入右下 312×555 并保留提问卡到答案 cue，同一 composition，全片一次；明确不算独立漂浮花字。
+- 新增冲击档：全片一个焦点句 `scale 0.92→1.06` 或 `36→56px`、`0.28s power3.out`，仅图形层，不受 A-Roll 不做推拉约束。
+- 数字口径表：用户口径优先、可回溯；`BRIEF.md` 记口径，`cards.json` 记 `number_cue` 与 `claim_cue`，交付汇报列出，供逐条抽查。问卷在涉及时长、年限、薪资、人数时同批问一次口径。
+- `conceptual-broll.md` 的文案部分改为指向 `copy-writing.md`，候选清单增受众标签、主结论句、数字 cue 与提问卡候选；`SKILL.md` 第 5、6 步、references 表与完成标准同步，回测 prompt 与 eval 各加一条。
+
+## 1.2.0
+
+- SKILL.md 重构为六节结构：When to Use / Outcome / Fixed Workflow（七步含 🔴 STOP）/ Non-Negotiable Constraints / Completion Criteria（含 NO/OK 示例）/ On-demand References；正文不再重复 references 已有细则，96 行压至约 70 行，内容无删减。
+- 新增图表占位文字禁令：图表内禁止「口播示例」等非内容文字，所有节点、标签、标题必须由字幕支持。
+- 图表风格自包含：diagram-design 51 种类型全量内嵌本地目录（补 SBGN、Requirement traceability、Event modeling、Steps、Unit Grid、Schedule network 六种），运行时不依赖外部 skill；上游同步加类型完整性核对，新增类型自动跟进；风格照搬上游、配色严守账号品牌定义。技研Labs 明确引用 larashero3-dotcom/lieflat-charts 与 patch-gg/pixelfx。
+- 多段观点图表呆滞防护：相邻动画段间停留将超 5 秒时，先恢复全覆盖 A-roll，满 5 秒再进入下一段图表 + PIP，类推到底。
+- `npx hyperframes init` 关闭自动转写、时间线 `--json` 命令侧筛选两处细节移入 `references/workflow.md`。
+
 ## 1.1.9
 
 - HTML 迭代改用 `lint` 快速反馈；批次结束及最终交付前运行完整 `check`，之后再改则重跑。

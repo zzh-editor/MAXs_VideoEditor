@@ -8,7 +8,7 @@ b-roll 不在转写之前做，也不跟精剪同时做。默认顺序：转写�
 
 判定只看字幕文本：这段在讲关系、层级、空间范围、因果或多步流程，而且画面本身讲不清，就进候选；只是一句术语、菜单路径、快捷键、单步操作，录屏已经能表达，就不进候选。
 
-候选清单每条写清：字幕编号与源时间、一句话主张、要用动画表达的关系、拟用的视觉动作、预计时长（通常 15–30 秒）。有多条时按“必须画图才讲得清”排序，一次给用户确认，确认后才制作。清单为空就写明未发现适合动画解释的内容，不为了凑数做图。用户可拒绝候选或指定其中几条。
+候选清单每条写清：字幕编号与源时间、一句话主张、要用动画表达的关系、拟用的视觉动作、预计时长（通常 15–30 秒）、受众标签与主结论句、涉及的数字及其 cue 编号；原片是提问结构时单列一条提问卡候选。有多条时按“必须画图才讲得清”排序，一次给用户确认，确认后才制作。清单为空就写明未发现适合动画解释的内容，不为了凑数做图。用户可拒绝候选或指定其中几条。
 
 ## 项目结构与可编辑性
 
@@ -36,6 +36,7 @@ b-roll 不在转写之前做，也不跟精剪同时做。默认顺序：转写�
 ### 按字幕推进图解
 
 - 为每个图解列出字幕 cue 与对应的视觉状态，子组合内动画时刻用 `cue.start - graphic.start` 换算。节点、连线、标签或数值在口播提到时分阶段出现；较长图解不得在开头几秒演完后静止覆盖剩余讲解，也不为填时长添加无关呼吸动画。
+- **多段观点图表的呆滞防护：** 长图解内部分多段动画依次揭示时，若相邻两段动画之间的画面停留会超过 5 秒（图表完整呈现、无新内容出现），先恢复全覆盖 A-roll，满 5 秒后再以图表 + A-roll PIP 进入下一段动画；后续各段同规则类推。切换走既有双向 PIP 关键帧（见 `hyperframes-talking-head.md`），A-roll 全屏时段照常显示字幕，不出现空白图表停留。
 - 关键内容应分布到整段口播，结尾留可读停顿并在下一段前退场。按字幕 cue、图解阶段时间和 `data-duration` 核对文字的入点、退场与 hold，不提前剧透后续关系。
 
 ### 可复用音效
@@ -112,7 +113,7 @@ const span = (time, start, end, curve = easeInOut) => curve(clamp01((time - star
 ```
 
 - **平面图形正视，不带透视。** 流程图、网格、柱状图这类平面内容，相机放在目标正对轴上（位置与 lookAt 同 x/y），不要侧向偏移，也不要把平面物体再倾斜一次；否则方框会变成梯形，读起来像透视错误。需要体积感时用正交投影的立方体、线框表达，不要靠斜视角造透视。
-- **说明文字按讲给同学听的口吻写。** 用具体动词和名词，不用抽象名词堆叠，不用"赋能/闭环/底层逻辑"这类词，也不用成对的否定句式（"不是 X，而是 Y"）。标题控制在 7 个汉字以内，避免换行出现孤字；正文一句话一件事，术语沿用字幕原写法。
+- **说明文字按 `copy-writing.md` 写。** 口吻、标题字数、受众标签、数字口径、品牌主张和交付前四问都在那里；本文件只管图型、布局与动效。图表内禁止出现「口播示例」「示例文字」「此处显示」这类占位性质的非内容文字；每个节点、标签和标题都必须是本条视频字幕支持的真实讲解内容。
 - 不加“蓝色表示当前重点”这类解释装饰色的小字。只有不同颜色、线型或点型代表真实数据类别，且读者需要说明时才加语义图例。
 - 不做独立漂浮花字。只在全屏 A-Roll 的原字幕内高亮实际说出的关键词/短语，图表 + PIP 段不高亮；字幕没有该词就不补写，普通句子也不为凑频率而整行变色。
 
@@ -122,9 +123,9 @@ const span = (time, start, end, curve = easeInOut) => curve(clamp01((time - star
 
 ### 可选图形类型
 
-- **结构与系统：** Architecture、Architecture delta、IT current-state、Deployment、High-Level、Nested、Tree、Org chart、Layer stack、Dependency graph、UML class、ER/data model、Database schema、Medallion、Exploded axonometric、Axonometric plan。
-- **流程与时间：** Flowchart、Sequence、State machine、Timeline、Swimlane、Process、Gantt、Story map、Kanban、User journey、Service blueprint、Loop。
-- **数据比较：** Quadrant、Radar、Polar、Bar/dumbbell、Line（slopegraph、ridgeline、streamgraph、bump）、Scatter（bubble、beeswarm、box plot）、Waterfall、Treemap/marimekko、Heatmap、Venn、Pyramid/funnel。
+- **结构与系统：** Architecture、Architecture delta、IT current-state、Deployment、High-Level、Nested、Tree、Org chart、Layer stack、Dependency graph、UML class、ER/data model、Database schema、Medallion、Exploded axonometric、Axonometric plan、SBGN。
+- **流程与时间：** Flowchart、Sequence、State machine、Timeline、Swimlane、Process、Gantt、Story map、Kanban、User journey、Service blueprint、Loop、Requirement traceability、Event modeling、Steps、Schedule network。
+- **数据比较：** Quadrant、Radar、Polar、Bar/dumbbell、Line（slopegraph、ridgeline、streamgraph、bump）、Scatter（bubble、beeswarm、box plot）、Waterfall、Treemap/marimekko、Heatmap、Venn、Pyramid/funnel、Unit Grid。
 - **流向与诊断：** Sankey、Fishbone、Wardley map、Data flow、DP integration、DP security matrix。
 
 ### 图形取舍
@@ -133,7 +134,7 @@ const span = (time, start, end, curve = easeInOut) => curve(clamp01((time - star
 - 图形布局尽量落在 4px 网格；用细边线、平直连接和明确层级，不加阴影，不把所有节点做成同尺寸圆角卡片。色彩按账号规则，只突出 1–2 个焦点。
 - 数据图按数据类型选图：类别比较用柱状图，趋势用折线，阶段与等待用时间线/泳道，部分与整体用 treemap，流量分流用 Sankey，多因素取舍用 quadrant；不为了新鲜而使用难读的图型。
 - 平面关系图正视表达，不用倾斜透视制造装饰感。只有空间、装配顺序或场地本身承载信息时，才用 axonometric。
-- 避免把 Diagram Design 的 45 个名字当模板清单。读取该类型的真实例图和限制后再选；已有图表不因这些规则自动重画。
+- 避免把 Diagram Design 的 51 个名字当模板清单。读取该类型的真实例图和限制后再选；已有图表不因这些规则自动重画。类型目录与上游对齐，新增类型按 `chart-style-sources.md` 的同步规则补进本表。
 
 ## 交付与对时
 

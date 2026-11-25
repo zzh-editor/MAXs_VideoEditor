@@ -5,6 +5,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 
@@ -15,7 +16,12 @@ MANIFEST = Path(__file__).resolve().parents[1] / "references" / "dependencies.js
 def skill_roots(home=None, xdg_config_home=None):
     home = Path(home or Path.home())
     config_home = Path(xdg_config_home or os.environ.get("XDG_CONFIG_HOME", home / ".config"))
-    return (config_home / "opencode" / "skills", home / ".agents" / "skills")
+    roots = (
+        config_home / "opencode" / "skills",
+        home / ".agents" / "skills",
+        MANIFEST.parents[2],  # 同目录安装的兄弟 skill：项目级或全局级都适用
+    )
+    return tuple(dict.fromkeys(roots))
 
 
 def missing_by_source(manifest, roots):
@@ -30,9 +36,17 @@ def missing_by_source(manifest, roots):
     return missing
 
 
+def npx_command():
+    """Return an executable path that subprocess can launch without a shell.
+
+    Windows 上 npx 是 npx.cmd，直接传 \"npx\" 会抛 WinError 2。
+    """
+    return shutil.which("npx") or "npx"
+
+
 def install_command(repository, skills, agent="opencode"):
     return [
-        "npx", "skills", "add", repository,
+        npx_command(), "skills", "add", repository,
         "--global", "--agent", agent, "--skill", *skills, "--yes",
     ]
 

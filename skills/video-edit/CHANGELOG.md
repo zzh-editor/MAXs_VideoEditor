@@ -1,5 +1,12 @@
 # 更新记录
 
+## 1.4.0
+
+- `retime.py` 支持 `--words` 与 `--allow-boundary-clip`：有词级数据时按真实词边界裁剪字幕，替代「切口跨越条目标错」的报错路径；无词级数据时行为不变。
+- 新增 `scripts/pipeline_opt.py`：`extract-cues` 从 SRT 提取 15–25 秒高密度候选窗口，免读全量 SRT；`render-chart` 按账号配色 Token 与词级 `step_triggers` 生成图表；`validate-svg` 校验 viewBox、品牌主色与最小字号。
+- Premiere Pro MCP 移出依赖管线：`--check` / `--install-missing` 不再检查它，用户明确要求导入时按 `references/premiere-import.md` 手动处理。
+- 补测试：词级重映射、边界裁剪、cue 提取与 SVG 校验，单测 25 项。
+
 ## 1.3.2
 
 - description 补使用场景与触发词（课程/直播/口播素材、录屏、直播录像、原始录制、现成工程、精剪、去口癖、字幕对时与校对、品牌包装、知识点图解、提问卡、烧录字幕）。触发测试 10 条前后都是 5/5 命中、0 误触，路由无变化，改的是 E0 体检里「没写何时用」的表述缺口。

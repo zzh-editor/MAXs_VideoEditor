@@ -5,7 +5,7 @@ description: 用 HyperFrames 制作或修改 MAXs、技研Labs、LeonaDesign 的
 
 # Video Edit
 
-当前版本：`1.3.2`。
+当前版本：`1.4.0`。
 
 ## When to Use This Skill
 
@@ -22,7 +22,7 @@ Keep this order; preferences are collected once up front, and approval gates are
 1. **导入与一次性确认。** 导入素材，检查媒体信息、同目录 SRT、已有工程和源片烧录文字。工程默认放输入视频旁 `<视频文件名>-hyperframes/`，已有工程或用户指定路径优先。把所有会改变结果且未回答的事项按 `references/preflight.md` 一次性问完（账号、类型、剪辑范围、转写/润色、图解、交付），写入 `BRIEF.md`；已说清的字段不问，答案传给下游技能且禁止它们重复提问。问卷之外不问品牌片头：口播和直播切片按 `references/brand-and-opening.md` 的账号规则处理。
 2. **原始索引。** 用户指定的 SRT 为文本来源；有效 SRT 直接复用，缺可靠字幕才调 `video-transcribe`。用户纠正字幕文件后，以纠正后的文件为准，不读被纠正掉的路径。
 3. **保守精剪。** 提出删除范围与原因，确认后写入 `edit-plan.json` 生成粗剪。口吃、自纠改口、说完又否定的重复话默认列入删除；只有删掉会伤论点、教学操作或指代时才保留，并在方案里说明原因。VAD/静音检测只给候选，不能直接决定删除。🔴 **STOP：**只在问卷预批准的范围/规则内执行；超出时停下，只问差异项。用户已人工精剪或明确授权时不再询问。
-4. **字幕对时。** 按同一剪辑清单调 `scripts/retime.py`（细则见 `references/workflow.md`）；跨剪切点字幕按可靠词级时间处理，词级数据复用 `video-transcribe` 的引擎和环境，不另建转写环境；引擎不可用或没有词级数据时保留整句或列入待确认，不改时间戳把条目塞进保留区间。脚本拒绝硬塞时回原文重拆，不机械截断。同一份文字只增强一次；Studio 字幕轨与外部 SRT 都出自同一份最终简体 SRT。
+4. **字幕对时。** 按同一剪辑清单调 `scripts/retime.py`（细则见 `references/workflow.md`）；跨剪切点字幕按可靠词级时间处理，有词级数据时用 `retime.py --words <words.json> --allow-boundary-clip` 按词边界裁剪；词级数据复用 `video-transcribe` 的引擎和环境，不另建转写环境；引擎不可用或没有词级数据时保留整句或列入待确认，不改时间戳把条目塞进保留区间。脚本拒绝硬塞时回原文重拆，不机械截断。同一份文字只增强一次；Studio 字幕轨与外部 SRT 都出自同一份最终简体 SRT。
 5. **内容扫描与 b-roll 提案。** 字幕定稿后必做一次内容扫描，即使本轮重点是剪辑或字幕。按 `references/cue-map.md` 生成精简 cue-map 供后续排期复用，不每阶段重读全量 SRT。按 `references/conceptual-broll.md` 给出候选：字幕编号、源时间、一句话主张、视觉关系、预计时长、受众标签与主结论句、涉及数字及其 cue；原片是提问结构时单列一条提问卡候选；无候选就明确记录，不硬凑。🔴 **STOP：**候选授权按 `references/preflight.md`——问卷预批准自动制作且候选仍由字幕支持时记录后继续；否则停下询问。
 6. **包装与图解。** 按账号规则处理片头、术语 tips、信息卡片和动画 b-roll（`references/brand-and-opening.md`、`references/conceptual-broll.md`、`references/chart-style-sources.md`）。卡片和图解绑定字幕来源与时间，不编造知识、数字或引用；文案按 `references/copy-writing.md` 写并过交付前四问，数字走 `BRIEF.md` 的口径；原片开头抛问题再解答时按 `references/brand-and-opening.md` 的提问卡两段式制作；图解风格从账号对应的本地类型目录选型，配色严守品牌定义。动画静音走独立 graphics 轨，保留 A-roll 原声。多段观点图解相邻动画段间停留会超 5 秒时，先恢复全屏 A-roll 再进入下一段。
 7. **检查与交付。** 编辑中用 `lint` 快速反馈，一批编辑结束或预览/渲染前跑 `check --json`，之后再改 HTML 就重跑。检查通过后抽查首帧及各受影响图解的入场、中段、退场，读图确认布局、遮挡与动效落点。然后 `npx hyperframes preview --background` 交 URL 给用户；预览不代替用户验收。用户预授权或明确要求时检查通过即渲染，否则停在预览。渲染成功后只用 `ffprobe` 核对非空、时长、尺寸、帧率、音视频流并确认配套 SRT 同源——此规则覆盖通用 `hyperframes-cli` 的成片帧抽查建议。交付三件套（MP4 + 同名 SRT + `_续编说明.txt`）路径占用时统一递增 `_v2`，不覆盖旧件。完成后可询问是否导入 Premiere Pro（`references/premiere-import.md`）。
@@ -63,6 +63,7 @@ Keep this order; preferences are collected once up front, and approval gates are
 | 口播 PIP 组织、覆盖率检查 | `references/hyperframes-talking-head.md` |
 | 平台安全区避让 | `references/platform-safe-areas.md` |
 | cue-map 生成 | `references/cue-map.md` |
+| cue 候选窗口、声明式图表、SVG 合规校验 | `scripts/pipeline_opt.py` |
 | 依赖安装与检查 | `references/installation.md`、`references/dependencies.json`、`scripts/ensure_dependencies.py` |
 | 渲染后导入 Premiere Pro | `references/premiere-import.md` |
 | 转写、词级时间、字幕增强 | `video-transcribe`、`srt-enhancer` |
@@ -70,3 +71,5 @@ Keep this order; preferences are collected once up front, and approval gates are
 | 图表风格与动效 | 包内 references 为权威源；`diagram-design`、`lieflat-charts`、`pixelfx` 仅作可选补充 |
 
 开工前运行 `python3 scripts/ensure_dependencies.py --check`，缺项用 `--install-missing` 补齐；开始图表设计前按 `references/chart-style-sources.md` 检查上游同步状态（用户要求更新或距上次满 7 天时融合）。上游仓库：MAXs 用 cathrynlavery/diagram-design（51 类型全量自包含），技研Labs 用 larashero3-dotcom/lieflat-charts 与 patch-gg/pixelfx；风格照搬上游、配色严守账号品牌定义。
+
+图表管线脚本：`scripts/pipeline_opt.py extract-cues` 从 SRT 提取 15–25 秒高密度候选窗口，免读全量 SRT；`render-chart` 按账号配色 Token 与词级 `step_triggers` 生成图表；`validate-svg` 检查 viewBox、品牌主色与最小字号（正文 ≥28px）。9:16 图表安全框 `x:108..950`、`y:154..1133` 由渲染器画框，几何合规仍靠抽帧目检。

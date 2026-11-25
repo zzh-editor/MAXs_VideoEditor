@@ -25,6 +25,14 @@ class DependencyTests(unittest.TestCase):
         self.assertTrue((SKILL_DIR / "references/chart-style-sources.md").is_file())
         self.assertTrue((SKILL_DIR / "examples/diagrams/maxs-recruitment-pools.png").is_file())
 
+    def test_premiere_mcp_is_not_part_of_the_dependency_pipeline(self):
+        manifest = json.loads((SKILL_DIR / "references" / "dependencies.json").read_text())
+        skills = {skill for source in manifest["sources"] for skill in source["skills"]}
+        repositories = {source["repository"] for source in manifest["sources"]}
+        self.assertNotIn("premiere-pro-mcp", skills)
+        self.assertFalse(any("Premiere" in repo or "premiere" in repo for repo in repositories))
+        self.assertEqual(manifest.get("services", []), [])
+
     def test_required_local_assets_are_bundled(self):
         self.assertTrue((SKILL_DIR / "assets/fonts/MiSansVF.ttf").is_file())
         self.assertTrue((SKILL_DIR / "assets/audio/Swoosh_01.wav").is_file())
@@ -66,6 +74,11 @@ class DependencyTests(unittest.TestCase):
                                      {"repository": "upstream/b", "skills": ["pixelfx"]}]}
             self.assertEqual(MODULE.missing_by_source(manifest, (config, agents)), {})
 
+    def test_project_local_sibling_skills_are_found(self):
+        installed_root = MODULE.MANIFEST.parents[2]
+        self.assertTrue((installed_root / "video-edit" / "SKILL.md").is_file())
+        self.assertIn(installed_root, MODULE.skill_roots())
+
     def test_missing_skills_are_grouped_by_repository(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -78,9 +91,15 @@ class DependencyTests(unittest.TestCase):
 
     def test_install_command_targets_opencode_global_scope(self):
         self.assertEqual(MODULE.install_command("owner/repo", ["one", "two"]), [
-            "npx", "skills", "add", "owner/repo", "--global", "--agent", "opencode",
-            "--skill", "one", "two", "--yes",
+            MODULE.npx_command(), "skills", "add", "owner/repo", "--global",
+            "--agent", "opencode", "--skill", "one", "two", "--yes",
         ])
+
+    def test_npx_resolves_to_a_launchable_path(self):
+        resolved = MODULE.npx_command()
+        if resolved == "npx":
+            self.skipTest("npx 不在 PATH 上")
+        self.assertTrue(Path(resolved).is_file())
 
     def test_large_repository_timeout_has_a_safe_default_and_can_be_overridden(self):
         self.assertEqual(MODULE.install_environment({})["SKILLS_CLONE_TIMEOUT_MS"], "600000")
